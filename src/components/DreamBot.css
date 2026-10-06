@@ -1,0 +1,20 @@
+.dreambot-unit{min-width:0}.dreambot{position:relative;width:132px;height:132px;isolation:isolate}.dreambot-body{width:100%;height:100%;transform-origin:50% 80%;animation:bot-idle 6s ease-in-out infinite}.dreambot img{display:block;width:100%;height:100%;object-fit:contain;user-select:none}
+.dreambot[data-state=welcome] .dreambot-body{animation:bot-welcome 2.6s ease-in-out 1}
+.dreambot[data-state=playing] .dreambot-body{animation:bot-listen 3.8s ease-in-out infinite}
+.dreambot[data-state=generating] .dreambot-body{animation:bot-idle 3.5s ease-in-out infinite;filter:drop-shadow(0 0 4px #5b9cdf45)}
+.dreambot[data-state=success] .dreambot-body{animation:bot-success 2s ease-in-out 1}
+.dreambot-dots{position:absolute;right:0;top:12%;display:flex;gap:4px}.dreambot-dots i{width:5px;height:5px;background:#699cce;border-radius:50%;animation:bot-dot 1.8s ease-in-out infinite}.dreambot-dots i:nth-child(2){animation-delay:.3s}.dreambot-dots i:nth-child(3){animation-delay:.6s}
+.dreambot-waves{position:absolute;right:0;bottom:22%;display:flex;align-items:center;gap:3px;height:22px}.dreambot-waves i{display:block;width:3px;height:18px;background:#589fcb;border-radius:4px;animation:bot-wave 1.3s ease-in-out infinite}
+.dreambot-sparks{position:absolute;inset:0;pointer-events:none}.dreambot-sparks i{position:absolute;top:43%;left:48%;color:#8d91de;font-size:13px;font-style:normal;animation:bot-spark 2s ease-out both}
+.dreambot-message{font-size:12px;line-height:1.7;min-height:3.4em;margin:0;color:var(--dim)}
+@keyframes bot-idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes bot-welcome{0%,100%{transform:translateY(0);filter:drop-shadow(0 0 0 #6cdcff00)}45%{transform:translateY(-5px);filter:drop-shadow(0 0 5px #6cdcff60)}}
+@keyframes bot-listen{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(2deg) translateY(-2px)}}
+@keyframes bot-success{0%,65%,100%{transform:translateY(0)}30%{transform:translateY(-9px)}}
+@keyframes bot-dot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+@keyframes bot-wave{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+@keyframes bot-spark{0%{opacity:0;transform:rotate(var(--angle)) translateX(30px)}25%{opacity:.8}100%{opacity:0;transform:rotate(var(--angle)) translateX(76px)}}
+.dreambot[data-paused=true] *{animation-play-state:paused!important}
+@media(max-width:1100px){.dreambot{width:100px;height:100px}}
+@media(max-width:600px){.dreambot{width:72px;height:72px}.dreambot-dots{right:-5px}.dreambot-dots i{width:3px;height:3px}.dreambot-waves{right:-5px}}
+@media(prefers-reduced-motion:reduce){.dreambot *{animation:none!important;transform:none!important;filter:none!important}.dreambot-sparks{display:none}}

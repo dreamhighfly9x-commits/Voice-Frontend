@@ -1,0 +1,9 @@
+/* Stage keeps the animation's 682x902 aspect so the layout does not shift while loading or on error. */
+.robot-greeting{--robot-width:160px;display:flex;flex-direction:column;align-items:center;gap:6px;width:var(--robot-width);flex:none}
+.robot-greeting-stage{width:100%;aspect-ratio:682/902;border-radius:16px}
+.robot-greeting[data-status=loading] .robot-greeting-stage,.robot-greeting[data-status=error] .robot-greeting-stage{background:color-mix(in srgb,currentColor 6%,transparent)}
+.robot-greeting-stage canvas{display:block;width:100%;height:100%}
+.robot-greeting-replay{font:inherit;font-size:11px;font-weight:600;padding:5px 12px;border-radius:999px;border:1px solid var(--line,rgba(0,0,0,.15));background:var(--panel,#fff);color:inherit;cursor:pointer}
+.robot-greeting-replay:disabled{opacity:.5;cursor:default}
+.robot-greeting-replay:focus-visible{outline:2px solid var(--acc,#6f4cc4);outline-offset:2px}
+@media(max-width:600px){.robot-greeting{--robot-width:110px}}

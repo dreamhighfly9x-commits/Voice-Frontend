@@ -1,0 +1,67 @@
+/* From Uiverse.io by andrew-demchenk0. Adapted for the existing theme button. */
+.voice-theme-switch {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 64px;
+  width: 64px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 30px;
+}
+.voice-theme-slider {
+  position: absolute;
+  inset: 5px 0;
+  background-color: #73c0fc;
+  transition: background-color .4s;
+  border-radius: 30px;
+}
+.voice-theme-slider::before {
+  position: absolute;
+  content: '';
+  height: 30px;
+  width: 30px;
+  border-radius: 20px;
+  left: 2px;
+  bottom: 2px;
+  z-index: 2;
+  background-color: #e8e8e8;
+  transition: transform .4s;
+}
+.voice-theme-sun svg {
+  position: absolute;
+  top: 5px;
+  left: 36px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  animation: voice-theme-rotate 15s linear infinite;
+}
+.voice-theme-moon svg {
+  fill: #73c0fc;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  animation: voice-theme-tilt 5s linear infinite;
+}
+.voice-theme-switch[aria-pressed='true'] .voice-theme-slider { background-color: #183153; }
+.voice-theme-switch[aria-pressed='true'] .voice-theme-slider::before { transform: translateX(30px); }
+.voice-theme-switch:focus-visible { outline: 3px solid var(--acc, #5b3df5); outline-offset: 3px; }
+@keyframes voice-theme-rotate {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+@keyframes voice-theme-tilt {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .voice-theme-sun svg, .voice-theme-moon svg { animation: none; }
+  .voice-theme-slider, .voice-theme-slider::before { transition: none; }
+}

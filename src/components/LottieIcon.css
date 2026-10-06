@@ -1,0 +1,3 @@
+/* Fixed box so surrounding layout never shifts while the animation loads or if it fails. */
+.lottie-icon{display:inline-block;flex:none;width:var(--lottie-icon-w);height:var(--lottie-icon-h);vertical-align:middle}
+.lottie-icon canvas{display:block;width:100%;height:100%}

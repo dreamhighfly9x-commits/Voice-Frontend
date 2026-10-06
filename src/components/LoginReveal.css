@@ -1,0 +1,12 @@
+.login-reveal{position:fixed;inset:0;z-index:10000;overflow:hidden;pointer-events:auto}
+.login-reveal-half{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;background:#030917;will-change:transform;animation-duration:1100ms;animation-delay:100ms;animation-timing-function:cubic-bezier(.76,0,.18,1);animation-fill-mode:both}
+.login-reveal-left{left:0;animation-name:login-open-left;border-right:1px solid #78edf077}
+.login-reveal-right{right:0;animation-name:login-open-right;border-left:1px solid #78edf077}
+.login-reveal-content{position:absolute;top:0;left:0;width:100vw;height:100vh}
+.login-reveal-right .login-reveal-content{left:-50vw}
+.login-reveal-content .voice-auth{min-height:100vh}
+.login-reveal-seam{position:absolute;left:50%;top:0;height:100%;width:1px;background:#a1f7ff;box-shadow:0 0 24px 3px #47daed88;animation:login-seam 650ms ease-out both;pointer-events:none}
+@keyframes login-open-left{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+@keyframes login-open-right{from{transform:translateX(0)}to{transform:translateX(100%)}}
+@keyframes login-seam{0%{opacity:0}20%{opacity:.8}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.login-reveal-half{animation-duration:1ms;animation-delay:0ms}.login-reveal-seam{display:none}}

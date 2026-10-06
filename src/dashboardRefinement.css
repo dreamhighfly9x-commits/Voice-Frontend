@@ -1,0 +1,158 @@
+/* Preserve the original workspace; refine only the rail and overview cards. */
+.dashboard .overview-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.dashboard .overview-grid>.portfolio-card{grid-column:1/-1}
+.dashboard>.favorite-leaderboard{margin-bottom:22px}
+.dashboard>.daily-greeting{width:100%;box-sizing:border-box}
+.dashboard>.dashboard-bottom{grid-template-columns:minmax(0,1fr)}
+.game-rank .medal-shield{width:62px;height:62px}.game-rank:has(.medal-shield){width:64px;filter:drop-shadow(0 3px 3px #60481330)}
+@media(min-width:1250px){
+ .dashboard{display:grid;grid-template-columns:minmax(0,1fr) 355px;column-gap:22px;align-items:start}
+ .dashboard>*{grid-column:1;min-width:0}
+ .dashboard>.favorite-leaderboard{grid-column:2;grid-row:1/7;margin:0;padding:20px 16px}
+ .dashboard .daily-greeting{grid-template-columns:90px minmax(0,1fr) 170px;gap:16px;padding:20px}
+ .dashboard .daily-greeting .dreambot{width:90px;height:105px}
+ .dashboard .daily-greeting .daily-calendar{grid-column:1/-1;grid-row:2;display:flex;align-items:center;gap:12px;border-left:0;border-top:1px solid var(--line);padding:12px 0 0;flex-wrap:wrap}
+ .dashboard .daily-calendar time{flex-direction:row;align-items:center;margin:0;gap:10px}.dashboard .daily-calendar time strong{font-size:15px}.dashboard .daily-calendar small{display:none}
+ .dashboard .daily-future-art{grid-column:3;grid-row:1}.dashboard .daily-message h2{font-size:20px}
+ .dashboard .overview-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.dashboard .portfolio-card{grid-column:1/-1}.dashboard .metric-card{padding:18px 12px}
+ .dashboard .dashboard-middle{grid-template-columns:minmax(0,1fr);gap:16px}.dashboard .dashboard-bottom{grid-template-columns:minmax(0,1fr)}
+ .dashboard>.favorite-leaderboard .ranking-labels{display:none}.dashboard>.favorite-leaderboard .ranking-row{grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:14px 0}
+ .dashboard>.favorite-leaderboard .rank-count{display:none}.dashboard>.favorite-leaderboard .rank-identity{gap:9px}
+ .dashboard>.favorite-leaderboard .rank-actions{flex-direction:column;gap:6px}.dashboard>.favorite-leaderboard .rank-actions button{font-size:10px;padding:6px 8px}
+ .dashboard>.favorite-leaderboard .rank-identity strong{font-size:12px}.dashboard>.favorite-leaderboard .section-heading{gap:8px}
+ .dashboard>.favorite-leaderboard .game-rank{width:54px}.dashboard>.favorite-leaderboard .medal-shield{width:54px;height:54px}
+}
+.recording-launcher{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;min-height:245px}
+.recording-launcher-icon{display:grid;place-items:center;width:54px;height:54px;background:var(--accSoft);color:var(--accDeep);border-radius:17px}
+.recording-launcher h2{font-size:23px;letter-spacing:-.5px;margin:0}.recording-launcher p{font-size:13px;color:var(--dim);margin:0;line-height:1.6}
+.dashboard .create-recording-button{display:flex;align-items:center;justify-content:center;gap:12px;border:1px solid #ffffff30;border-radius:18px;min-height:58px;padding:14px 32px;background:linear-gradient(115deg,#2466d9,#6844cc);color:#fff;font-size:17px;font-weight:750;box-shadow:0 8px 22px #4b54bc38,inset 0 1px 0 #ffffff26;transition:transform .18s ease,box-shadow .18s ease}
+.dashboard .create-recording-button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 26px #4b54bc50;filter:brightness(1.06)}
+.dashboard .create-recording-button:active:not(:disabled){transform:translateY(0) scale(.98)}
+.dashboard .create-recording-button:focus-visible{outline:3px solid var(--accDeep);outline-offset:5px}
+.dashboard .daily-actions button:first-child,[data-theme=dark] .dashboard .daily-actions button:first-child{background:linear-gradient(115deg,#2466d9,#6844cc);color:#fff;box-shadow:0 5px 14px #4b54bc30;border-radius:14px;padding:11px 18px;font-weight:700;font-size:12px}
+.dashboard .daily-actions button:first-child:hover{filter:brightness(1.08)}
+.dashboard .recording-launcher{border-color:var(--accLine);background:radial-gradient(ellipse at 50% 100%,var(--accSoft),var(--panel) 72%)}
+.create-recording-button>span{display:grid;place-items:center;width:28px;height:28px;background:#ffffff20;border-radius:9px}
+@media(prefers-reduced-motion:reduce){.dashboard .create-recording-button:hover:not(:disabled),.dashboard .create-recording-button:active:not(:disabled){transform:none}}
+.create-recording-button>span{font-size:22px;line-height:1}.recording-launcher small{font-size:12px;color:var(--dim)}
+.credit-balance{font-size:clamp(30px,3.2vw,48px);font-weight:800;line-height:1.15;letter-spacing:-1.5px;font-variant-numeric:tabular-nums;margin:18px 0 6px;max-width:100%;overflow-wrap:anywhere}
+.credit-unit{font-size:12px;font-weight:500}.dashboard .credit-card p{font-size:11px;margin:10px 0 0}.dashboard .credit-card progress{accent-color:#644ca0}
+@media(max-width:760px){.credit-balance{font-size:42px;margin-top:14px}.recording-launcher h2{font-size:20px}.dashboard .create-recording-button{width:100%;max-width:280px}.recording-launcher{min-height:230px}}
+:root{--chart:#638bbf;--rail:#272c3a;--railInk:#d3d8e7;--railActive:#414b64}
+[data-theme=dark]{--chart:#a4bce8;--rail:#161b28;--railInk:#d2dbed;--railActive:#354766}
+.app-shell{padding:10px;gap:10px}
+.nav-rail,.nav-rail.expanded{background:var(--rail);color:var(--railInk);border-radius:26px;border:1px solid #ffffff10;box-shadow:0 8px 24px #15233d14}
+.nav-section button{border-radius:15px;min-height:44px}
+.nav-section button[aria-current=page]{background:var(--railActive);color:#fff;box-shadow:inset 0 0 0 1px #ffffff15}
+.nav-section button:hover{background:#ffffff12}.nav-rail .rail-toggle{color:#c2ccdf}
+.nav-rail.expanded .nav-section small{color:#adb9ce}.rail-bottom button>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dashboard .portfolio-card,.dashboard .metric-card{text-align:center}
+.dashboard .card-topline{justify-content:center;gap:8px;font-size:12px}
+.dashboard .metric-card{align-items:center;justify-content:center}
+.dashboard .metric-value{margin-top:20px}.dashboard .metric-footer{justify-content:center;width:100%;font-size:11px;margin-top:12px}
+.dashboard .metric-icon{display:none}.dashboard .metric-card .text-link{text-align:center}
+.dashboard .chart-summary{justify-content:center;flex-wrap:wrap}.dashboard .chart-summary small{display:none}
+.dashboard .metric-card progress{max-width:180px;margin:12px 0}.dashboard .portfolio-value{line-height:1.3}
+.dashboard .pastel-blue{--chart:#5385aa}
+.dashboard .section-heading{justify-content:center;text-align:center;flex-wrap:wrap}.dashboard .section-heading>div{min-width:0}
+.dashboard .engagement-score{text-align:center}.dashboard .engagement-layout{align-items:center}
+.dashboard .eyebrow,.dashboard .promo-kicker,.dashboard .promo-orbits{display:none}
+.dashboard .create-promo{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:none}
+.dashboard .create-promo h2{margin-top:0;font-size:25px}.dashboard .create-promo p{margin:4px 0 10px}
+.dashboard .interaction-card>.data-caption{display:none}
+.dashboard .voice-ranking{padding:22px;border:1px solid var(--line);border-radius:22px}
+.dashboard .ranking-labels,.dashboard .ranking-row{grid-template-columns:minmax(0,1fr) 70px 120px;gap:12px}
+.favorite-ranks{list-style:none;padding:0;margin:0}.favorite-ranks .ranking-row{min-height:91px;padding:12px 4px}
+.favorite-ranks .rank-identity{gap:14px}.favorite-ranks .rank-identity strong{line-height:1.5;overflow-wrap:anywhere;font-size:13px}
+.favorite-ranks .rank-identity small{font-size:11px;color:var(--dim);margin-top:5px}.favorite-ranks .rank-count{justify-content:center;font-size:16px}
+.ranking-labels>span:nth-child(2){text-align:center}.rank-actions{align-items:center;justify-content:center}.rank-actions button{min-height:32px}
+.game-rank{--metal:#8c97b2;--metal-light:#edf1fc;--metal-deep:#3b4968;display:flex;flex:none;flex-direction:column;align-items:center;width:58px;gap:2px;filter:drop-shadow(0 3px 4px #18223922)}
+.game-rank svg{display:block;width:54px;height:56px;overflow:visible}.rank-shield{fill:var(--metal);stroke:var(--metal-light);stroke-width:1.5}.rank-inset{fill:var(--metal-deep);stroke:var(--metal-light);stroke-width:.7}.rank-wings{fill:var(--metal);stroke:var(--metal-light);stroke-width:1}.rank-crown{fill:var(--metal);stroke:var(--metal-light);stroke-width:.7}
+.game-rank text{fill:#fff;font-size:22px;font-weight:800;font-family:inherit}.game-rank b{font-size:10px;letter-spacing:1px;color:var(--ink2)}
+.game-rank-1{--metal:#e9b943;--metal-light:#fff0b7;--metal-deep:#846020}.game-rank-2{--metal:#adbfdc;--metal-light:#f2f6ff;--metal-deep:#52647e}.game-rank-3{--metal:#c68f67;--metal-light:#ffe1bc;--metal-deep:#805335}.game-rank-4{--metal:#9692d7;--metal-light:#e4deff;--metal-deep:#5c548b}.game-rank-5{--metal:#6fabbc;--metal-light:#d4f6ff;--metal-deep:#39667b}
+.favorite-place-1{background:linear-gradient(90deg,#e9b9430d,transparent);border-radius:12px}
+.favorite-empty{text-align:center;padding:25px 10px}.favorite-empty>span{font-size:38px;color:var(--acc)}.favorite-empty h3{font-size:15px;margin:10px 0}.favorite-empty p{color:var(--dim);font-size:12px;line-height:1.6}.favorite-empty button{background:var(--accSoft);color:var(--accDeep);border:1px solid var(--accLine);border-radius:20px;padding:10px 16px}
+.ranking-info{margin-top:16px;color:var(--dim);font-size:11px;line-height:1.7}.ranking-info summary{cursor:pointer;text-align:center}.ranking-info p{margin-bottom:0}
+.dashboard .recent-card .section-heading{margin-bottom:12px}.dashboard .clone-shortcut{justify-content:center;text-align:center}.dashboard .clone-shortcut button{margin-left:0}
+.dashboard .data-table-wrap td,.dashboard .data-table-wrap th{text-align:center}
+@media(max-width:1150px){.dashboard-bottom{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:760px){
+ .app-shell{padding:6px;gap:6px}.nav-rail{width:56px;border-radius:20px;padding:12px 5px}.nav-rail.expanded{left:6px;background:var(--rail);border-radius:20px}
+ .dashboard .metric-card:last-child{display:flex;align-items:center;justify-content:center}.dashboard .metric-card:last-child .metric-value{margin:10px 0}.dashboard .metric-card:last-child progress{width:100%;margin:12px 0}
+ .dashboard .voice-ranking{padding:16px 12px}.favorite-ranks .ranking-row{grid-template-columns:minmax(0,1fr) auto;gap:8px}.favorite-ranks .rank-count{display:none}.favorite-ranks .rank-identity{gap:8px}.favorite-ranks .rank-identity strong{font-size:12px}.favorite-ranks .rank-identity small{font-size:10px}.game-rank{width:42px}.game-rank svg{width:40px;height:44px}.game-rank b{font-size:9px}
+ .favorite-ranks .rank-actions{flex-direction:column;gap:4px}.favorite-ranks .rank-actions button{font-size:10px;padding:5px 8px}.dashboard .section-heading h2{font-size:17px}.dashboard .section-heading p{font-size:11px}
+}
+/* Compact first view: summary metrics precede the activity chart. */
+@media(min-width:1250px){
+ .app-header{padding:18px 28px 6px}.page-heading h1{font-size:24px}.header-brand{margin-bottom:6px}
+ .dashboard{padding-top:10px;column-gap:18px;grid-template-columns:minmax(0,1fr) 330px}
+ .dashboard .daily-greeting{padding:14px 18px;gap:10px 14px;margin-bottom:12px;grid-template-columns:74px minmax(0,1fr) 140px}
+ .dashboard .daily-greeting .dreambot{width:74px;height:82px}.dashboard .daily-message h2{font-size:18px;margin-bottom:4px}.dashboard .daily-message>p:last-of-type{font-size:11px;line-height:1.4;min-height:0}.dashboard .daily-actions{margin-top:8px;gap:8px}.dashboard .daily-actions button{padding:8px 12px;font-size:11px}
+ .dashboard .daily-greeting .daily-calendar{padding-top:8px;gap:10px}.dashboard .daily-week>span{height:22px}.dashboard .daily-calendar time strong{font-size:13px}
+ .dashboard-toolbar{margin-bottom:10px}.dashboard .overview-grid{gap:12px}
+ .dashboard .metric-card{min-height:155px;padding:14px 10px}.dashboard .metric-value{font-size:28px;margin-top:8px}.dashboard .metric-card p{margin:5px 0 8px;font-size:11px}.dashboard .metric-footer{margin-top:6px;font-size:10px}.dashboard .credit-balance{font-size:36px;margin:8px 0 3px}.dashboard .credit-card progress{margin:7px 0}.dashboard .credit-unit{font-size:11px}
+ .dashboard .portfolio-card{padding:14px 20px}.dashboard .portfolio-value{font-size:30px;margin-top:4px}.dashboard .activity-chart svg{height:105px}.dashboard .chart-summary{min-height:18px}.dashboard .chart-axis{font-size:10px}
+ .dashboard .dashboard-middle{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);margin:12px 0;gap:12px}
+ .dashboard .recording-launcher{min-height:150px;padding:16px;gap:8px}.dashboard .recording-launcher-icon{display:none}.dashboard .recording-launcher h2{font-size:19px}.dashboard .recording-launcher p{font-size:12px}.dashboard .create-recording-button{min-height:48px;padding:10px 24px;font-size:15px}
+ .dashboard .create-promo{padding:16px}.dashboard .create-promo h2{font-size:20px;margin:0 0 6px}.dashboard .create-promo p{display:none}.dashboard .create-promo button{font-size:11px;padding:10px 12px}
+ .dashboard>.favorite-leaderboard{padding:16px 12px}.dashboard>.favorite-leaderboard .ranking-row{min-height:80px;padding:10px 0}.dashboard>.favorite-leaderboard .section-heading{margin-bottom:10px}.dashboard>.favorite-leaderboard .section-heading h2{font-size:18px}.dashboard>.favorite-leaderboard .section-heading p{font-size:10px}
+ .dashboard .dashboard-bottom{margin-top:4px}.dashboard .recent-card{padding:16px 20px}
+}
+@media(max-width:760px){
+ .dashboard .overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .dashboard .overview-grid>.credit-card{grid-column:1/-1}
+}
+@media(min-width:1250px){
+ .dashboard .portfolio-card{display:grid;grid-template-columns:minmax(150px,.7fr) minmax(0,1.6fr);grid-template-rows:auto 1fr;gap:6px 20px;align-items:center}
+ .dashboard .portfolio-card .card-topline{grid-column:1;grid-row:1}.dashboard .portfolio-card .portfolio-value{grid-column:1;grid-row:2;align-self:start}.dashboard .portfolio-value>span{display:block;margin:5px 0 0}
+ .dashboard .portfolio-card .activity-chart{grid-column:2;grid-row:1/3;min-width:0;margin:0}.dashboard .activity-chart svg{height:95px}
+ .dashboard .credit-card p{margin:5px 0 0}.dashboard .credit-balance{line-height:1.05}.dashboard .credit-card progress{margin:5px 0}
+ .dashboard .overview-slide-controls{gap:4px;padding:0 6px}.dashboard .overview-slide-controls>span{white-space:nowrap}.dashboard .overview-slide-controls button{width:21px}
+}
+/* Larger borderless imagery; keep the greeting and ranking readable. */
+@media(min-width:1250px){
+ .dashboard .daily-greeting{grid-template-columns:74px minmax(0,1fr) minmax(230px,36%)}
+ .dashboard .daily-future-art{width:100%;align-self:center}
+}
+@media(min-width:761px) and (max-width:1249px){
+ .dashboard .daily-greeting{grid-template-columns:90px minmax(0,1fr) minmax(260px,38%)}
+ .dashboard .daily-future-art{grid-column:3;grid-row:1}
+ .dashboard .daily-calendar{grid-column:1/-1;grid-row:2;border-left:0;border-top:1px solid var(--line);padding:12px 0 0}
+}
+@media(max-width:760px){
+ .dashboard .daily-greeting{grid-template-columns:72px minmax(0,1fr)}
+ .dashboard .daily-future-art{grid-column:1/-1;grid-row:auto;width:100%;margin-top:6px}
+}
+/* Slightly smaller slideshow without changing its grid placement. */
+.dashboard .daily-future-art{width:90%;justify-self:center}
+/* Credit becomes the greeting's primary highlight; artwork takes its old tile. */
+.dashboard .daily-feature{grid-column:3;grid-row:1;width:100%;min-width:0;align-self:stretch}
+.welcome-credit{height:100%;padding:18px 20px;border-radius:18px;background:linear-gradient(125deg,#315bd0,#6150bd);color:#fff;text-align:left;box-shadow:0 7px 20px #4558b526;display:flex;flex-direction:column;justify-content:center}
+.welcome-credit-heading{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:650}.credit-symbol{color:#ffe296;font-size:18px}.welcome-credit-heading small{margin-left:auto;font-size:8px;letter-spacing:.8px;color:#e1e7ff;white-space:nowrap}
+.welcome-credit-number{font-size:clamp(32px,3vw,46px);font-weight:800;line-height:1.15;letter-spacing:-1.5px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;display:block;margin:10px 0 2px}.welcome-credit-unit{font-size:12px;color:#eef1ff}
+.welcome-credit-meter{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:10px;margin:14px 0 5px;color:#edf0ff}.welcome-credit progress{width:100%;height:5px;appearance:none;border:0;border-radius:5px;overflow:hidden;background:#ffffff30}.welcome-credit progress::-webkit-progress-bar{background:#ffffff30}.welcome-credit progress::-webkit-progress-value{background:#bdefff;border-radius:5px}.welcome-credit progress::-moz-progress-bar{background:#bdefff;border-radius:5px}.welcome-credit p{font-size:10px;margin:7px 0 0;color:#eef1ff;line-height:1.6}
+.welcome-credit-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:13px;padding-top:10px;border-top:1px solid #ffffff30;font-size:10px;color:#eef1ff}.dashboard .welcome-credit-bottom button{border:0;border-radius:8px;background:#ffffff18;padding:6px 8px;color:#fff;font-size:11px;white-space:nowrap}.welcome-credit-bottom button:hover{background:#ffffff30}
+.dashboard .overview-visual{min-width:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:20px;background:transparent}
+.overview-visual .overview-slideshow{width:100%;max-width:330px;aspect-ratio:16/9;border-radius:18px}
+@media(min-width:1250px){.dashboard .daily-greeting{grid-template-columns:74px minmax(0,1fr) minmax(250px,38%)}.dashboard .daily-feature{grid-row:1/3}.dashboard .daily-greeting .daily-calendar{grid-column:1/3}.dashboard .daily-message{align-self:center}}
+@media(min-width:761px) and (max-width:1249px){.dashboard .daily-greeting{grid-template-columns:90px minmax(0,1fr) minmax(260px,36%)}.dashboard .daily-feature{grid-row:1/3}.dashboard .daily-greeting .daily-calendar{grid-column:1/3}}
+@media(max-width:760px){.dashboard .daily-feature{grid-column:1/-1;grid-row:auto}.welcome-credit{padding:18px}.welcome-credit-number{font-size:42px}.dashboard .overview-visual{grid-column:1/-1}.overview-visual .overview-slideshow{max-width:100%}}
+/* No slideshow: restore credit to the third summary tile. */
+.dashboard .daily-greeting{grid-template-columns:90px minmax(0,1fr)}
+.dashboard .daily-greeting .daily-calendar{grid-column:1/-1;grid-row:2}
+.dashboard .overview-credit{min-width:0}
+.dashboard .overview-credit .welcome-credit{padding:16px;border-radius:20px;text-align:center}
+.overview-credit .welcome-credit-heading{justify-content:center;flex-wrap:wrap}.overview-credit .welcome-credit-heading small{margin-left:0}
+.overview-credit .welcome-credit-number{font-size:clamp(28px,2.5vw,38px)}
+.overview-credit .welcome-credit-bottom{flex-wrap:wrap;justify-content:center}
+@media(min-width:1250px){.dashboard .daily-greeting{grid-template-columns:74px minmax(0,1fr)}.dashboard .daily-greeting .daily-calendar{grid-column:1/-1}.overview-credit .welcome-credit-number{margin-top:6px}.overview-credit .welcome-credit-meter{margin-top:8px}.overview-credit .welcome-credit-bottom{margin-top:8px;padding-top:6px}}
+@media(max-width:760px){.dashboard .daily-greeting{grid-template-columns:72px minmax(0,1fr)}.dashboard .overview-credit{grid-column:1/-1}.overview-credit .welcome-credit-number{font-size:42px}}
+/* Restore the original lavender-to-rose credit palette. */
+.dashboard .overview-credit .welcome-credit{background:linear-gradient(115deg,#a496b8,#ee8e9c);color:#3c304d;box-shadow:0 5px 12px #52648b0d}
+.overview-credit .welcome-credit-heading small,.overview-credit .credit-symbol,.overview-credit .welcome-credit-unit,.overview-credit .welcome-credit-meter,.overview-credit .welcome-credit p,.overview-credit .welcome-credit-bottom{color:#3c304d}
+.overview-credit .welcome-credit-bottom{border-top-color:#3c304d26}
+.dashboard .overview-credit .welcome-credit-bottom button{background:#ffffff35;color:#3c304d}
+.dashboard .overview-credit .welcome-credit-bottom button:hover{background:#ffffff60}
+.overview-credit .welcome-credit progress,.overview-credit .welcome-credit progress::-webkit-progress-bar{background:#ffffff40}
+.overview-credit .welcome-credit progress::-webkit-progress-value{background:#644ca0}
+.overview-credit .welcome-credit progress::-moz-progress-bar{background:#644ca0}

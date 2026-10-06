@@ -1,0 +1,11 @@
+/* Adapted from Uiverse.io by elijahgummer: green tile wipes in when checked. */
+.dh-check{position:relative;display:inline-block;flex:none;width:1.3em;height:1.3em;font-size:18px;border:3px solid #beddd0;border-radius:10px;overflow:hidden;cursor:pointer;user-select:none;background:var(--panel);box-sizing:content-box}
+.dh-check input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:1}
+.dh-checkmark{position:absolute;inset:0;background-color:#2dc38c;border-bottom:1.5px solid #2dc38c;border-radius:8px;box-shadow:0 0 1px #cef1e4,inset 0 -2.5px 3px #62eab8,inset 0 3px 3px rgba(0,0,0,.34);transform:translateY(-110%);transition:transform .3s ease-in-out}
+.dh-checkmark::before{content:"";position:absolute;left:50%;top:44%;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 4px 2px rgba(0,0,0,.34)}
+.dh-check input:checked~.dh-checkmark{transform:translateY(0)}
+.dh-check input:focus-visible~.dh-checkmark{outline:2px solid var(--acc);outline-offset:-2px}
+.dh-check:has(input:focus-visible){border-color:#2dc38c}
+.dh-check:has(input:disabled){opacity:.4;cursor:not-allowed}.dh-check input:disabled{cursor:not-allowed}
+.dh-check.small{font-size:13px;border-width:2px;border-radius:8px}.dh-check.small .dh-checkmark{border-radius:6px}.dh-check.small .dh-checkmark::before{width:4px;height:8px}
+@media(prefers-reduced-motion:reduce){.dh-checkmark{transition:none}}

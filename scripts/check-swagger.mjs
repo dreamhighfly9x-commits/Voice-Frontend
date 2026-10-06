@@ -1,0 +1,34 @@
+import { chromium, expect } from '@playwright/test';
+const browser=await chromium.launch({headless:true});
+try {
+  const page=await browser.newPage({viewport:{width:1440,height:1000}});
+  const errors=[];
+  page.on('pageerror',error=>errors.push(error.message));
+  page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
+  await page.goto('http://127.0.0.1:5173/swagger/index.html');
+  await expect(page.locator('.opblock-tag')).toHaveCount(12);
+  const spec=await page.evaluate(()=>window.ui.specSelectors.specJson().toJS());
+  const total=Object.values(spec.paths).reduce((count,methods)=>count+Object.keys(methods).length,0);
+  await expect(page.locator('.opblock')).toHaveCount(total);
+  const health=page.locator('.opblock').filter({has:page.locator('[data-path="/api/health"]')});
+  await health.locator('.opblock-summary').click();
+  await health.getByRole('button',{name:'Try it out'}).click();
+  await health.getByRole('button',{name:'Execute',exact:true}).click();
+  await expect(health.locator('.live-responses-table')).toContainText('200');
+  await expect(health.locator('.live-responses-table')).toContainText('ok');
+  const login=page.locator('.opblock').filter({has:page.locator('[data-path="/api/auth/login"]')});
+  await login.locator('.opblock-summary').click();
+  await expect(login).toContainText('email');
+  await expect(login).toContainText('password');
+  const goHealth=await page.request.get('http://127.0.0.1:5173/healthz');
+  expect(goHealth.status()).toBe(200);
+  const protectedResponse=await page.request.get('http://127.0.0.1:5173/api/recordings');
+  expect(protectedResponse.status()).toBe(401);
+  if(errors.length)throw new Error(errors.join('\n'));
+  await page.screenshot({path:'../.runtime/swagger-desktop.png'});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:'../.runtime/swagger-mobile.png'});
+  await page.locator('.topbar select').selectOption({label:'Go riêng · tài khoản và dự án'});
+  await expect(page.locator('.opblock').filter({has:page.locator('[data-path="/api/voices"]')})).toContainText('backend Go');
+  console.log(JSON.stringify({groups:12,operations:total,healthExecute:200,browserErrors:errors.length}));
+} finally { await browser.close(); }

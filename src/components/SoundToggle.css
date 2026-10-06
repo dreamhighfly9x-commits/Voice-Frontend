@@ -1,0 +1,5 @@
+.sound-toggle{--sound-color:#a5a5b0;cursor:pointer;user-select:none}
+.sound-toggle svg{width:20px;height:20px;fill:var(--sound-color);animation:sound-toggle-fill .5s}
+.sound-toggle .voice{--sound-color:var(--acc)}
+@keyframes sound-toggle-fill{0%{transform:rotate(0deg) scale(0);opacity:0}50%{transform:rotate(-10deg) scale(1.2)}}
+@media(prefers-reduced-motion:reduce){.sound-toggle svg{animation:none}}

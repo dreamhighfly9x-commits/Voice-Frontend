@@ -1,0 +1,37 @@
+{
+  "name": "voice-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "swagger:assets": "node scripts/copy-swagger.mjs",
+    "predev": "npm run swagger:assets",
+    "prebuild": "npm run swagger:assets"
+  },
+  "dependencies": {
+    "@lottiefiles/dotlottie-react": "^0.19.16",
+    "page-mascot": "^0.1.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "swagger-ui-dist": "5.33.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^30.1.0",
+    "oxlint": "^1.81.0",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
+  }
+}

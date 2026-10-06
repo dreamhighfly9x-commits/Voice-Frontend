@@ -1,0 +1,343 @@
+:root {
+  --bg: #f5f5f8;
+  --panel: #ffffff;
+  --soft: #f7f7fa;
+  --line: #e8e8ee;
+  --line2: #f0f0f5;
+  --line3: #f6f6f9;
+  --ink: #17171c;
+  --ink2: #4a4a58;
+  --dim: #6c6c7a;
+  --dim2: #8a8a99;
+  --dim3: #a6a6b4;
+  --wave1: #26262e;
+  --wave2: #5a5a68;
+  --wave3: #c2c2ce;
+  --acc: #5b3df5;
+  --accDeep: #4429d8;
+  --accSoft: #f0ecff;
+  --accLine: #ded4ff;
+  --barOff: #e0e0e8;
+  --contrast: #17171c;
+  --contrastInk: #ffffff;
+  --contrastDim: #b9b9c6;
+  --okBg: #e7f8ef;
+  --okInk: #127a4e;
+  --infoBg: #eaf1ff;
+  --infoInk: #1f4fa9;
+  --errBg: #fdecea;
+  --errInk: #a8291b;
+  --warnBg: #fff7ed;
+  --warnLine: #fbdcb0;
+  --warnInk: #8a5200;
+  --warnInk2: #6b4b16;
+}
+
+[data-theme='dark'] {
+  --bg: #0d0d13;
+  --panel: #16161e;
+  --soft: #1c1c26;
+  --line: #282833;
+  --line2: #212129;
+  --line3: #1d1d25;
+  --ink: #f1f1f6;
+  --ink2: #c6c6d3;
+  --dim: #9c9cae;
+  --dim2: #84849a;
+  --dim3: #6c6c80;
+  --wave1: #ffffff;
+  --wave2: #a8a8b8;
+  --wave3: #41414f;
+  --acc: #8b73ff;
+  --accDeep: #c0b1ff;
+  --accSoft: #221f3d;
+  --accLine: #3d3576;
+  --barOff: #2e2e3a;
+  --contrast: #f1f1f6;
+  --contrastInk: #14141b;
+  --contrastDim: #5a5a6a;
+  --okBg: #12291f;
+  --okInk: #6ddba0;
+  --infoBg: #141f36;
+  --infoInk: #8fb4ff;
+  --errBg: #301617;
+  --errInk: #ff9a8f;
+  --warnBg: #2b2010;
+  --warnLine: #57411c;
+  --warnInk: #f0b45c;
+  --warnInk2: #d6ab77;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.03em;
+}
+
+a {
+  color: var(--acc);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accDeep);
+  text-decoration: underline;
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--line);
+  outline: none;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+}
+input[type='range']::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+}
+
+textarea,
+input[type='text'] {
+  font-family: 'Inter', sans-serif;
+  background: transparent;
+  color: var(--ink);
+}
+textarea:focus,
+input:focus {
+  outline: none;
+}
+::placeholder {
+  color: var(--dim3);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fadeUpA {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeUpB {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes wavePulse {
+  0%,
+  100% {
+    transform: scaleY(0.55);
+  }
+  50% {
+    transform: scaleY(1.25);
+  }
+}
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Any element flagged tappable gets the same hover/active language as the
+   original prototype's cursor:pointer convention. */
+.tap {
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.tap:active {
+  transform: scale(0.97);
+}
+.tap-soft:hover {
+  background: var(--accSoft) !important;
+}
+.tap-line:hover {
+  background: var(--soft) !important;
+}
+.tap-deep:hover {
+  background: var(--accDeep) !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 8px;
+}
+
+/* Auth card — two-pane login/signup with a 3D "page turn" curtain flip. */
+.logo-candy {
+  background: linear-gradient(90deg, #db3bbf, #8b5cf6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.auth-card {
+  position: relative;
+  width: 760px;
+  max-width: 100%;
+  min-height: 480px;
+  perspective: 1500px;
+  overflow: hidden;
+  border-radius: 22px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 60px rgba(20, 12, 50, 0.18);
+}
+@media (max-width: 720px) {
+  .auth-card {
+    min-height: 0;
+  }
+  .auth-card .auth-overlay {
+    display: none;
+  }
+  .auth-pane {
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+}
+
+.auth-pane {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  overflow-y: auto;
+}
+.auth-pane-login {
+  left: 0;
+}
+.auth-pane-register {
+  right: 0;
+}
+
+.auth-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  background: linear-gradient(160deg, #8b5cf6, #db3bbf);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 14px;
+  padding: 40px 32px;
+  box-sizing: border-box;
+  z-index: 2;
+}
+.auth-card.show-signup .auth-overlay {
+  animation: turn-left 860ms linear forwards;
+}
+.auth-card:not(.show-signup) .auth-overlay {
+  animation: turn-right 860ms linear forwards;
+}
+@keyframes turn-left {
+  0% {
+    transform: translate3d(0, 0, 0) rotateY(0);
+  }
+  20% {
+    transform: translate3d(-10%, 0, 0) rotateY(-2.6deg);
+  }
+  50% {
+    transform: translate3d(-50%, 0, 0) rotateY(-4.5deg);
+  }
+  80% {
+    transform: translate3d(-90%, 0, 0) rotateY(-2.6deg);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0) rotateY(0);
+  }
+}
+@keyframes turn-right {
+  0% {
+    transform: translate3d(-100%, 0, 0) rotateY(0);
+  }
+  20% {
+    transform: translate3d(-90%, 0, 0) rotateY(2.6deg);
+  }
+  50% {
+    transform: translate3d(-50%, 0, 0) rotateY(4.5deg);
+  }
+  80% {
+    transform: translate3d(-10%, 0, 0) rotateY(2.6deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotateY(0);
+  }
+}
+
+/* Lottie accents: success check in the toast (kept compact), ranking badges above the leaderboard title. */
+.toast-checked{margin:-10px -4px -10px -8px}
+.leaderboard-badges{display:block;margin:0 auto 4px}

@@ -1,0 +1,8 @@
+.expression-tools { padding: 12px 18px; border-block: 1px solid var(--line2); background: var(--soft); }
+.expression-tools-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.expression-tools-row > span { font-size: 12px; font-weight: 650; color: var(--ink2); margin-right: 4px; }
+.expression-tools .expression-tools-row button { width: auto; padding: 7px 11px; border: 1px solid var(--accLine); border-radius: 9px; background: var(--panel); color: var(--accDeep); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.expression-tools-row button:hover:not(:disabled) { background: var(--accSoft); }
+.expression-tools-row button:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.expression-tools-row button:disabled { opacity: .5; cursor: not-allowed; }
+.expression-tools p { margin: 8px 0 0; color: var(--dim); font-size: 12px; line-height: 1.5; }

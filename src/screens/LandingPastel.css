@@ -1,0 +1,128 @@
+/* Public showcase palette, inspired by the owner's ocean / mist reference. */
+.landing-page {
+  --lp-header-height: 91px;
+  --brand-night: #eef0f0;
+  --brand-surface: #ffffff;
+  --brand-surface-raised: #e9eef8;
+  --brand-text: #193748;
+  --brand-muted: #596e7f;
+  --brand-subtle: #607488;
+  --brand-cyan: #326780;
+  --brand-blue: #467d9c;
+  --brand-lilac: #6975a4;
+  --brand-line: #b1c0d54d;
+  --brand-line-bright: #8c9dcd;
+  color-scheme: light;
+  background: #eef0f0;
+}
+.landing-page ::selection { background: #d1d7f3; color: #193748; }
+.landing-page h2 > span { color: #657ea0; }
+.lp-header { background: #f9fbffe0; border-color: #ffffffb3; box-shadow: 0 1px 0 #819ab61a; }
+.lp-brand .dh-logo-name > span { color: #467d9c; }
+.lp-brand .dh-logo-tagline { color: #607488; }
+.lp-brand .dh-logo-mark { filter: drop-shadow(0 3px 8px #7891b526); }
+.lp-nav a:not(.lp-button):hover, .lp-text-link:hover, .lp-footer a:hover { color: #5967a8; }
+.landing-page .lp-button { background: #193b50; color: #fff; border-color: #24465a; box-shadow: 0 6px 16px #284d681a; }
+.landing-page .lp-button:hover { background: #2e526a; box-shadow: 0 8px 20px #284d6826; }
+.landing-page .lp-button-outline { background: #ffffff80; color: #294f67; border-color: #abbacf; box-shadow: none; }
+.landing-page .lp-button-outline:hover { background: #e8eef8; }
+.lp-eyebrow { color: #59768b; }
+.lp-status-dot { background: #658f9c; box-shadow: 0 0 0 4px #6c99ac1a; }
+.landing-page .lp-hero {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  width: 100%;
+  gap: clamp(32px, 5vw, 96px);
+  padding: clamp(40px, 6vh, 80px) 5vw;
+  margin: 0;
+  min-height: calc(100svh - var(--lp-header-height));
+  border: 0;
+  border-radius: 0;
+  background:
+    radial-gradient(ellipse 55% 85% at 94% 10%, #b9d4f280, transparent 80%),
+    radial-gradient(ellipse 55% 85% at 95% 95%, #d8c8ef9e, transparent 78%),
+    linear-gradient(110deg, #fffffff2 5%, #fcfdffeb 48%, #e7f0f6b3);
+  box-shadow: none;
+}
+.lp-hero-media { min-width: 0; }
+.lp-video-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
+.lp-video-heading > span:last-child { font-size: 8px; letter-spacing: 1.5px; color: #73869a; white-space: nowrap; }
+.lp-video-heading .lp-eyebrow { font-size: 8px; letter-spacing: 1.15px; }
+.lp-hero-video-frame { border-radius: 0; border: 0; background: transparent; overflow: hidden; box-shadow: none; }
+.lp-hero-video-frame .lp-intro-video { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; max-height: none; object-fit: contain; border-radius: 0; background: #071123; color-scheme: dark; }
+.lp-video-fallback { aspect-ratio: 16 / 9; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 25px; gap: 12px; text-align: center; background: linear-gradient(135deg, #e6eff6, #eeedf9); }
+.lp-video-fallback > span { font-size: 35px; color: #6989a5; }
+.lp-video-fallback > strong { font-size: 23px; font-weight: 500; }
+.lp-video-fallback p { font-size: 12px; }
+.lp-video-caption { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 24px; padding-top: 18px; border-top: 1px solid #b1c0d54d; }
+.lp-video-caption > span { font-size: 11px; line-height: 1.8; color: #677e92; }
+.lp-video-caption strong { font-weight: 500; color: #345467; }
+.lp-video-caption .lp-text-link { font-size: 10px; gap: 16px; }
+.lp-video-caption .lp-text-link > span { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(130deg, #cfdfef, #dcd5f0); font-size: 18px; }
+.landing-page .lp-hero h1 { font-size: clamp(64px, 6.2vw, 90px); line-height: .99; font-weight: 750; letter-spacing: -5px; margin: 27px 0 24px; }
+.landing-page .lp-hero h1 > span { display: block; color: #1b3e52; background: linear-gradient(135deg, #173c4c, #466783 75%, #7177a6); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 9px 22px #6474990d; }
+.landing-page .lp-hero h1 > span:nth-child(2) { white-space: nowrap; }
+.landing-page .lp-hero h1 > .lp-title-period { display: none; }
+.lp-hero-copy > .lp-hero-tagline { font-size: 18px; font-weight: 600; color: #25495e; line-height: 1.4; margin-bottom: 13px; }
+.lp-hero-copy > p { font-size: 13px; line-height: 1.85; max-width: 380px; }
+.lp-hero-copy .lp-eyebrow { font-size: 9px; letter-spacing: 2px; }
+.lp-hero-copy .lp-actions { gap: 18px; margin-top: 26px; flex-wrap: wrap; }
+.lp-hero-copy .lp-button { font-size: 11px; min-height: 47px; padding: 12px 16px; gap: 17px; }
+.lp-hero-copy .lp-text-link { font-size: 11px; }
+.lp-hero-note { font-size: 9px; gap: 15px; margin-top: 18px; }
+.lp-provider-strip { border-color: #aebed14d; }
+.lp-provider-strip > div > span { opacity: .78; color: #526d83; }
+.lp-demo { background: #ffffffd9; border-color: #c6d2e2; box-shadow: 0 15px 40px #4867890a; }
+.lp-demo-voices { background: linear-gradient(145deg, #dbedf6, #d4dee3); }
+.lp-demo-top > span { background: #e9f0f8; color: #55758f; }
+.lp-voice-option.is-selected { background: #ffffffe6; border-color: #adc6dc; box-shadow: 0 4px 12px #536e8c10; }
+.lp-voice-option:hover { background: #dce8f5; }
+.lp-avatar.peach { background: linear-gradient(135deg, #d7e7f0, #dfebf9); color: #547f9d; }
+.lp-avatar.lilac { background: linear-gradient(135deg, #e4dff4, #e3e9fb); color: #7b71a5; }
+.lp-avatar.mint { background: linear-gradient(135deg, #dbece9, #daebf5); color: #538c95; }
+.lp-features, .lp-pricing { background: linear-gradient(115deg, #dfe6ea, #c8d9e1 75%, #dbedf6); border-block: 1px solid #9cbbcb55; }
+.lp-feature-card, .lp-plan { background: linear-gradient(140deg, #ffffffed, #f9fbffcc); border-color: #c8d3e366; }
+.lp-feature-main { background: #ffffffeb; }
+.lp-feature-api { background: linear-gradient(115deg, #dbedf6, #acc3cf); }
+.lp-feature-icon { color: #587c9c; }
+.lp-mini-editor { background: #f7faff; }
+.lp-mini-editor > span { color: #617d95; }
+.lp-waveform i { background: linear-gradient(0deg, #a5b1d1, #78a8bd, #b3afd7); }
+.lp-billing-label { color: #58758f; background: #ffffff80; border-color: #bfccdf; }
+.lp-plan.is-popular { background: linear-gradient(140deg, #fff, #eef1fd); border-color: #7e92bd; box-shadow: 0 10px 35px #8e9fc529; }
+.lp-plan-label > span { color: #3f5b77; background: linear-gradient(115deg, #d1e3ef, #ded6f3); }
+.lp-plan-quota strong, .lp-plan li > span { color: #507b91; }
+.lp-final-cta { background: var(--ocean-background); border-color: #9cbbcb; box-shadow: 0 16px 45px #0a243815; }
+.lp-cta-decoration { color: #9aa8cd66; }
+.lp-error { color: #ac3f57 !important; }
+.lp-docs pre { color: #294c64; background: #eaf0f8; border: 1px solid #c8d3e3; }
+@media (max-width: 1100px) {
+  .landing-page .lp-hero { gap: 32px; padding: 40px 4vw; }
+  .landing-page .lp-hero h1 { font-size: clamp(52px, 6.4vw, 73px); letter-spacing: -3px; }
+  .lp-hero-copy > .lp-hero-tagline { font-size: 16px; }
+  .lp-video-caption { align-items: flex-start; gap: 10px; }
+  .lp-video-caption .lp-text-link { font-size: 9px; gap: 8px; }
+}
+@media (max-width: 850px) {
+  .landing-page { --lp-header-height: 77px; }
+  .lp-nav { background: #f8faff; box-shadow: 0 12px 25px #61769920; }
+  .lp-menu-button { background: #f3f7fc; border-color: #bacade; color: #30546a; }
+  .landing-page .lp-hero { padding: 38px 24px; gap: 28px; }
+  .landing-page .lp-hero h1 { font-size: 53px; }
+  .lp-video-heading > span:last-child { display: none; }
+  .lp-video-caption { flex-direction: column; gap: 14px; }
+  .lp-hero-copy > p { font-size: 12px; }
+  .lp-hero-note { flex-direction: column; gap: 5px; }
+}
+@media (max-width: 680px) {
+  .landing-page .lp-hero { grid-template-columns: 1fr; gap: 28px; padding: 28px 20px 32px; align-content: center; }
+  .lp-video-caption { flex-direction: row; align-items: center; margin-top: 16px; padding-top: 12px; }
+  .lp-video-caption > span { font-size: 10px; }
+  .lp-video-caption .lp-text-link { font-size: 9px; }
+  .lp-video-heading { margin-bottom: 13px; }
+  .lp-video-heading .lp-eyebrow { font-size: 7px; }
+  .landing-page .lp-hero h1 { font-size: clamp(53px, 12vw, 72px); letter-spacing: -3px; line-height: 1.02; margin: 18px 0; }
+  .lp-hero-copy > .lp-hero-tagline { font-size: 17px; }
+  .lp-hero-copy > p { font-size: 13px; }
+  .lp-hero-copy .lp-actions { gap: 15px; margin-top: 22px; }
+  .lp-hero-note { flex-direction: row; flex-wrap: wrap; gap: 12px; }
+}

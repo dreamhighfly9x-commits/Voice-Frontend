@@ -60,7 +60,7 @@ describe('App integration', () => {
     await user.type(screen.getByLabelText('Tên file tải về'),'Bản đọc buổi sáng');
     await user.click(screen.getByRole('button',{name:'Tạo âm thanh'}));
     await waitFor(()=>expect(screen.getByRole('tab',{name:/Lịch sử/})).toHaveAttribute('aria-selected','true'));
-    expect(screen.getByText('Bản đọc buổi sáng',{selector:'.studio-history-item strong'})).toBeVisible();
+    expect(screen.getByText('Bản đọc buổi sáng',{selector:'.studio-player strong'})).toBeVisible();
   });
   it('imports only after confirmation, appends and undoes without losing existing text', async () => {
     const user=userEvent.setup();

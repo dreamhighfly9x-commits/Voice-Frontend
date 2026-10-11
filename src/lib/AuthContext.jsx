@@ -44,6 +44,13 @@ export function AuthProvider({ children }) {
   }, [loadMe]);
 
   const register = useCallback((email, password) => authApi.register(email, password), []);
+  const finishGoogleMFA = useCallback(async (code) => {
+    const result = await authApi.googleMFA(code);
+    if (result.next) window.history.replaceState(null, '', '/login?next=' + encodeURIComponent(result.next));
+    setAccessToken(result.access_token);
+    await loadMe(result.access_token);
+    setStatus('authenticated');
+  }, [loadMe]);
   const refreshUser = useCallback(async () => {
     const profile = await authApi.apiJson('/api/me');
     setUser(profile);
@@ -84,8 +91,8 @@ export function AuthProvider({ children }) {
   }, [status]);
 
   const value = useMemo(
-    () => ({ status, user, accessToken, login, register, verifyEmail, logout, refreshUser }),
-    [status, user, accessToken, login, register, verifyEmail, logout, refreshUser]
+    () => ({ status, user, accessToken, login, register, verifyEmail, logout, refreshUser, finishGoogleMFA }),
+    [status, user, accessToken, login, register, verifyEmail, logout, refreshUser, finishGoogleMFA]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

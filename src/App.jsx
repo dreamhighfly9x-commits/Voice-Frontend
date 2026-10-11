@@ -1,11 +1,14 @@
 import { apiFetch, apiJson } from './lib/authApi';
 import { useAuth, usePermission } from './lib/AuthContext';
 import AuthScreen from './screens/AuthScreen';
+import LandingPage from './screens/LandingPage';
+import PublicApiDocs from './screens/PublicApiDocs';
+import { readLandingDraft, clearLandingDraft } from './lib/landingDraft';
 import LoginReveal from './components/LoginReveal';
 import LoadingIndicator from './components/LoadingIndicator';
 import DreamBotCompanion from './components/DreamBotCompanion';
 import {useDreamBot} from './lib/dreamBotActivity';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -21,8 +24,9 @@ import ScriptScreen from './screens/ScriptScreen';
 import BatchScreen from './screens/BatchScreen';
 import LibraryScreen from './screens/LibraryScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import CreditsScreen from './screens/CreditsScreen';
+import PricingScreen from './screens/PricingScreen';
 import AdminScreen from './screens/AdminScreen';
+import ApiDocsScreen from './screens/ApiDocsScreen';
 import { canOpenPage } from './lib/permissionMatrix';
 import ProvidersScreen from './screens/ProvidersScreen';
 import { useUiSound } from './lib/useUiSound';
@@ -32,10 +36,14 @@ import {
   QUOTA_LIMIT_DEFAULT,
 } from './data';
 
+const API_DOCS_PATH = '/docs/api';
 const activeEngine = { name: 'VieNeu v3 Turbo', prefix: '', maxChars: 5000 };
 
 export default function App(props) {
   const { status, user } = useAuth();
+  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  const next = new URLSearchParams(window.location.search).get('next');
+  const requestedScreen = { studio: 'studio', voices: 'voices', clones: 'clones', api: 'apidocs' }[next];
   const [loginSnapshot, setLoginSnapshot] = useState(null);
   const finishReveal = useCallback(() => setLoginSnapshot(null), []);
   const prepareReveal = () => {
@@ -47,9 +55,11 @@ export default function App(props) {
     snapshot.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
     setLoginSnapshot({ node: snapshot, width: window.innerWidth, scrollY: window.scrollY });
   };
+  if (path === '/welcome' || (path === '/' && status !== 'authenticated')) return <LandingPage />;
+  if (path === API_DOCS_PATH && status !== 'authenticated') return <PublicApiDocs />;
   if (status === 'checking') return <LoadingIndicator fullScreen label="Đang kiểm tra đăng nhập…" />;
-  if (status !== 'authenticated') return <AuthScreen onLoginStart={prepareReveal} onLoginFailure={finishReveal} subtitle="Đăng nhập để truy cập giọng và bản ghi của bạn." />;
-  return <><AuthenticatedApp key={user.id} {...props} />{loginSnapshot && <LoginReveal snapshot={loginSnapshot} onComplete={finishReveal} />}</>;
+  if (status !== 'authenticated') return <AuthScreen initialMode={path === '/register' ? 'register' : 'login'} onLoginStart={prepareReveal} onLoginFailure={finishReveal} subtitle="Đăng nhập để truy cập giọng và bản ghi của bạn." />;
+  return <><AuthenticatedApp key={user.id} {...props} defaultScreen={requestedScreen || props.defaultScreen} />{loginSnapshot && <LoginReveal snapshot={loginSnapshot} onComplete={finishReveal} />}</>;
 }
 
 function AuthenticatedApp({
@@ -60,7 +70,14 @@ function AuthenticatedApp({
 }) {
   const { can } = usePermission();
   const { user } = useAuth();
-  const [screen, setScreen] = useState(defaultScreen);
+  const [landingDraft] = useState(readLandingDraft);
+  const [screen, setScreen] = useState(() => (window.location.pathname === API_DOCS_PATH ? 'apidocs' : landingDraft ? 'studio' : defaultScreen));
+  useEffect(() => { if (landingDraft) clearLandingDraft(); }, [landingDraft]);
+  // /docs/api is the only deep-linkable screen; keep the address bar in sync.
+  useEffect(() => {
+    const path = screen === 'apidocs' ? API_DOCS_PATH : [API_DOCS_PATH, '/login', '/register'].includes(window.location.pathname) ? '/' : null;
+    if (path) window.history.replaceState(null, '', path + (screen === 'apidocs' ? window.location.hash : ''));
+  }, [screen]);
   const pageAllowed = canOpenPage(screen, can);
   useEffect(() => { if (!pageAllowed) setScreen('home'); }, [pageAllowed]);
   const [projects,setProjects]=useState([]);
@@ -76,16 +93,21 @@ function AuthenticatedApp({
   const [toast, setToast] = useState('');
   const [toastKind, setToastKind] = useState({ id: 0, success: false });
 
-  const [text, setText] = useState(INITIAL_TEXT);
+  const [text, setText] = useState(landingDraft || INITIAL_TEXT);
   const [dictionary, setDictionary] = useState(() => readDictionary(user.id));
   const [undoText, setUndoText] = useState(null);
-  const maxChars = Math.min(activeEngine.maxChars, user.limits?.max_chars_request ?? 5000);
+
   const effectiveText = applyDictionary(text, dictionary);
   const replaceText = (next) => { setUndoText(text); setText(next); };
   const [voice, setVoice] = useState('');
   const [optState, setOptState] = useState({ voice: null, values: {} });
   const [engineVoices, setEngineVoices] = useState([]);
+  // Cloud voices outside the core list (favorites, picked from the paged library),
+  // fetched on demand via /api/voices/lookup instead of loading the full catalog.
+  const [extraVoices, setExtraVoices] = useState([]);
+  const lookupPending = useRef(new Set());
   // Provider-voice controls, derived (not an effect) so switching voice resets cleanly.
+  const maxChars = Math.min(activeEngine.maxChars, user.limits?.max_chars_request ?? 5000, engineVoices.find(v=>v.id===voice)?.capabilities?.max_chars ?? 5000);
   const voiceControls = engineVoices.find((v) => v.id === voice)?.controls || [];
   const voiceOptions = optState.voice === voice ? optState.values : defaultOptions(voiceControls);
   const setVoiceOption = (name, value) => setOptState(current => ({ voice, values: { ...(current.voice===voice?current.values:defaultOptions(voiceControls)), [name]: value } }));
@@ -108,6 +130,7 @@ function AuthenticatedApp({
 
 
   const audioRef = useRef(null);
+  const getAudio = useCallback(() => audioRef.current, []);
   const requestBusy = useRef(false);
   const toastTimer = useRef(null);
 
@@ -167,7 +190,7 @@ function AuthenticatedApp({
         const [voices, recordings] = await Promise.all(responses.map((response) => response.json()));
         if (controller.signal.aborted) return;
         setEngineVoices(voices);
-        setVoice((current) => voices.some((v) => v.id === current) ? current : voices[0]?.id || '');
+        setVoice((current) => voices.some((v) => v.id === current) || current.startsWith('ext_') ? current : voices[0]?.id || '');
         setResults(recordings.map((r) => ({ ...r, url: config.prefix + r.url })));
         setEngineReady(voices.length > 0);
         setEngineStatus(config.name + ' · Sẵn sàng');
@@ -191,7 +214,7 @@ function AuthenticatedApp({
         if (!response.ok) return;
         const voices = await response.json();
         setEngineVoices(voices);
-        setVoice((current) => voices.some((v) => v.id === current) ? current : (voices[0]?.id || ''));
+        setVoice((current) => voices.some((v) => v.id === current) || current.startsWith('ext_') ? current : (voices[0]?.id || ''));
         setEngineReady(voices.length > 0);
       } catch { /* keep current list on failure */ }
     };
@@ -268,6 +291,7 @@ function AuthenticatedApp({
       result.url = activeEngine.prefix + result.url;
       setResults((list) => [result, ...list]);
       showToast('Đã tạo và lưu bản ghi WAV.', 3200, true);
+      if (!autoplay) { ping(880, 0.35, 0.12); setTimeout(() => ping(1318.5, 0.45, 0.12), 120); }
       if (autoplay) await playAudio(result, playbackId || result.id);
       return result;
     } catch (error) { showToast(error.message, 6000); }
@@ -277,7 +301,7 @@ function AuthenticatedApp({
   const play = (id) => {
     const recording = results.find((r) => r.id === id);
     if (recording) {setPreviewLoading(null);return playAudio(recording);}
-    const preset = engineVoices.find((v) => 'v' + v.id === id);
+    const preset = voiceData.find((v) => 'v' + v.id === id) || (id.startsWith('vext_') ? { id: id.slice(1) } : null);
     if (preset) {
       const sequence=++playbackSequence.current;
       audioRef.current?.pause();
@@ -300,14 +324,35 @@ function AuthenticatedApp({
   };
 
   // ── derived view data ──
-  const voiceData = engineVoices.map((v) => ({ ...v, ...voiceCategories[v.id] }));
+  const voiceData = useMemo(()=>{
+    const seen=new Set(engineVoices.map((v)=>v.id));
+    return [...engineVoices, ...extraVoices.filter((v)=>!seen.has(v.id))].map((v) => ({ ...v, ...voiceCategories[v.id] }));
+  },[engineVoices,extraVoices,voiceCategories]);
+  const ensureVoices = useCallback(async (ids) => {
+    const known = new Set([...engineVoices, ...extraVoices].map((v) => v.id));
+    const missing = [...new Set(ids)].filter((id) => id?.startsWith('ext_') && !known.has(id) && !lookupPending.current.has(id));
+    if (!missing.length) return;
+    missing.forEach((id) => lookupPending.current.add(id));
+    try {
+      for (let i = 0; i < missing.length; i += 100) {
+        const found = await apiJson('/api/voices/lookup?ids=' + encodeURIComponent(missing.slice(i, i + 100).join(',')));
+        if (Array.isArray(found) && found.length) setExtraVoices((list) => { const have = new Set(list.map((v) => v.id)); return [...list, ...found.filter((v) => !have.has(v.id))]; });
+      }
+    } catch { /* lookup is best-effort: the voice stays usable by id */ }
+    finally { missing.forEach((id) => lookupPending.current.delete(id)); }
+  }, [engineVoices, extraVoices]);
+  useEffect(() => {
+    if (!engineReady) return;
+    const timer = setTimeout(() => ensureVoices([voice, ...Object.keys(favs).filter((id) => favs[id])]), 0);
+    return () => clearTimeout(timer);
+  }, [engineReady, voice, favs, ensureVoices]);
   const selectedVoice = voiceData.find((v) => v.id === voice);
   const quickVoices = selectedVoice ? [selectedVoice, ...voiceData.filter((v) => v.id !== voice).slice(0, 2)] : voiceData.slice(0, 3);
-  const searchIndex = [
+  const searchIndex = useMemo(()=>[
     ...voiceData.map((v) => ({ key: 'voice:' + v.id, id: v.id, kind: 'Giọng', title: v.name, detail: v.desc, keywords: [v.tags, v.gender === 'female' ? 'nữ' : v.gender === 'male' ? 'nam' : '', v.style === 'doc_truyen' ? 'kể chuyện' : v.style === 'quang_cao' ? 'quảng cáo' : ''].join(' ') })),
     ...results.map((r) => ({ key: 'recording:' + r.id, id: r.id, kind: 'Bản ghi', title: r.title, detail: r.meta, url: r.url })),
     ...projects.map((p) => ({ key: 'project:' + p.id, id: p.id, kind: 'Dự án', title: p.name, detail: p.segments + ' đoạn thoại' })),
-  ];
+  ],[voiceData,results,projects]);
 
   const chars = text.length;
   const segCount = text.split(/\n\s*\n/).filter((t) => t.trim()).length;
@@ -341,7 +386,7 @@ function AuthenticatedApp({
           onNewProject={() => go('studio')}
         />
 
-        {screen !== 'home' && <DreamBotCompanion bot={bot} screen={screen}/>}
+        {!['home', 'admin', 'apidocs', 'pricing', 'providers', 'settings'].includes(screen) && <DreamBotCompanion bot={bot} screen={screen}/>}
 
         {screen === 'studio' && (
           <StudioScreen
@@ -371,6 +416,7 @@ function AuthenticatedApp({
             playingId={playing}
             onPlay={play}
             onDelete={deleteRecording}
+            getAudio={getAudio}
             quickVoices={quickVoices}
             voices={voiceData}
             voice={voice}
@@ -383,7 +429,7 @@ function AuthenticatedApp({
           />
         )}
 
-        {screen === 'home' && <HomeScreen bot={bot} favorites={favs} voices={voiceData} recordings={results} playingId={playing} generating={generating} onPlay={play} onPick={(id)=>{setVoice(id);go('studio');}} onNavigate={go} engineReady={engineReady} />}
+        {screen === 'home' && <HomeScreen bot={bot} favorites={favs} voices={voiceData} recordings={results} playingId={playing} generating={generating} onPlay={play} getAudio={getAudio} onPick={(id)=>{setVoice(id);go('studio');}} onNavigate={go} engineReady={engineReady} />}
 
         {screen === 'voices' && (
           <VoicesScreen
@@ -392,6 +438,7 @@ function AuthenticatedApp({
             voices={voiceData}
             voiceFilter={voiceFilter}
             onClassify={(id, category) => setVoiceCategories((current) => ({ ...current, [id]: { ...current[id], ...category } }))}
+            overrides={voiceCategories}
             onFilter={setVoiceFilter}
             playingId={playing}
             onPlay={play}
@@ -399,6 +446,7 @@ function AuthenticatedApp({
             onFav={(id) => setFavs((f) => ({ ...f, [id]: !f[id] }))}
             voice={voice}
             onPick={(id) => {
+              ensureVoices([id]);
               setVoice(id);
               go('studio');
             }}
@@ -462,8 +510,9 @@ function AuthenticatedApp({
         )}
 
         {screen === 'settings' && <SettingsScreen animStyle={animStyle} />}
-        {screen === 'credits' && <CreditsScreen animStyle={animStyle} />}
+        {screen === 'pricing' && <PricingScreen animStyle={animStyle} onNavigate={go} onToast={showToast} />}
         {screen === 'providers' && <ProvidersScreen animStyle={animStyle} />}
+        {screen === 'apidocs' && <ApiDocsScreen animStyle={animStyle} />}
         {screen === 'admin' && <AdminScreen animStyle={animStyle} />}
       </main>
 

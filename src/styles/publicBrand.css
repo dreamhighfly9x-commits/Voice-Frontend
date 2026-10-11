@@ -1,0 +1,27 @@
+/* Shared visual tokens for the public site and account screens. */
+.landing-page,
+.voice-auth {
+  --ocean-background:
+    radial-gradient(ellipse 60% 75% at 24% 32%, #6f9db580, transparent 75%),
+    radial-gradient(ellipse 48% 65% at 90% 12%, #a8dcf499, transparent 78%),
+    linear-gradient(135deg, #eef0f0 0%, #d4dee3 52%, #dbedf6 100%);
+  --brand-night: #030917;
+  --brand-surface: #0b192b;
+  --brand-surface-raised: #122739;
+  --brand-text: #edf7ff;
+  --brand-muted: #a8bed0;
+  --brand-subtle: #8faabd;
+  --brand-cyan: #72e8e7;
+  --brand-blue: #4bc4ea;
+  --brand-lilac: #a6b5ff;
+  --brand-line: #4b819b4a;
+  --brand-line-bright: #6ddfec80;
+  --brand-page-background:
+    radial-gradient(ellipse 85% 680px at 5% 0%, #073744b3, transparent 72%),
+    radial-gradient(ellipse 60% 850px at 100% 8%, #25306b55, transparent 75%),
+    #030917;
+  --brand-panel-gradient: linear-gradient(145deg, #122739ed, #0b1429f5);
+  --brand-action-gradient: linear-gradient(110deg, #72e8e7, #4bc4ea 58%, #91a7ff);
+  --brand-heading-gradient: linear-gradient(105deg, #72e8e7 5%, #80d5ff 52%, #b4b9ff);
+  --brand-glow: 0 8px 30px #2acde31a;
+}

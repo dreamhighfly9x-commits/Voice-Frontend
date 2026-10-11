@@ -1,0 +1,51 @@
+.apidocs{display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px;padding:26px 30px 60px;color:var(--ink);align-items:start}
+.apidocs-toc{position:sticky;top:16px;display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 120px);overflow:auto;padding:16px 12px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+.apidocs-toc small{font-size:10px;letter-spacing:.14em;font-weight:800;color:var(--dim);margin:12px 8px 6px}.apidocs-toc small:first-child{margin-top:0}
+.apidocs-toc a{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;color:var(--ink2);text-decoration:none;font-size:13px}
+.apidocs-toc a:hover,.apidocs-toc a:focus-visible{background:var(--accSoft);color:var(--acc)}
+.apidocs-toc-ref{font-family:ui-monospace,Consolas,monospace;font-size:12px!important}.apidocs-toc-ext{margin-top:10px;color:var(--acc)!important}
+.apidocs-body{display:flex;flex-direction:column;gap:22px;min-width:0}
+.apidocs-body section{padding:24px;border:1px solid var(--line);border-radius:18px;background:var(--panel);scroll-margin-top:16px;line-height:1.65;font-size:14px}
+.apidocs-body h2{margin:0 0 12px;font-size:20px}.apidocs-body h3{margin:18px 0 8px;font-size:15px}.apidocs-body p{margin:0 0 12px}
+.apidocs-body a{color:var(--acc)}.apidocs-body :not(pre)>code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;padding:2px 6px;border-radius:6px;background:var(--soft);overflow-wrap:anywhere}
+.apidocs-hero{background:linear-gradient(125deg,var(--accSoft),var(--panel))!important;border-color:var(--accLine)!important}
+.apidocs-eyebrow{font-size:10px;letter-spacing:.16em;font-weight:800;color:var(--acc)}.apidocs-hero h2{font-size:26px;margin-top:10px}
+.apidocs-hero ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.apidocs-base{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);margin:6px 0 4px}
+.apidocs-base span{font-size:12px;color:var(--dim);font-weight:700}.apidocs-base code{flex:1;min-width:0}
+.apidocs button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--panel);color:var(--ink);cursor:pointer}
+.apidocs button:disabled{opacity:.55;cursor:not-allowed}.apidocs button:focus-visible,.apidocs input:focus{outline:2px solid var(--accLine);outline-offset:2px}
+.apidocs .apidocs-primary{background:var(--acc);border-color:var(--acc);color:#fff}
+.apidocs-code{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:10px 0 14px;background:#14141c}
+.apidocs-code-bar{display:flex;justify-content:space-between;align-items:center;padding:6px 8px 6px 14px;background:#1d1d28;color:#a9a9bd;font-size:12px}
+.apidocs .apidocs-copy{padding:4px 10px;font-size:12px;background:transparent;color:#d6d6e6;border-color:#34344a}
+.apidocs .apidocs-copy:hover{background:#2a2a3a}
+.apidocs-base .apidocs-copy,.apidocs-newkey .apidocs-copy{color:var(--ink);border-color:var(--line)}
+.apidocs-base .apidocs-copy:hover,.apidocs-newkey .apidocs-copy:hover{background:var(--soft)}
+.apidocs-code pre{margin:0;padding:14px 16px;overflow-x:auto;color:#e8e8f2;font:12.5px/1.6 ui-monospace,Consolas,monospace;white-space:pre}
+.apidocs-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.apidocs-tabs button[aria-selected=true]{background:var(--accSoft);color:var(--acc);border-color:var(--accLine)}
+.apidocs-method{display:inline-block;min-width:44px;text-align:center;font:800 10.5px ui-monospace,Consolas,monospace;padding:3px 6px;border-radius:6px}
+.apidocs-method.get{background:#e3f4ec;color:#127a4e}.apidocs-method.post{background:#ece8ff;color:#4b2fd9}
+.apidocs-endpoint{padding:18px 0;border-top:1px solid var(--line)}.apidocs-endpoint:first-of-type{border-top:0;padding-top:4px}.apidocs-endpoint h3{display:flex;align-items:center;gap:10px;margin:0 0 8px;scroll-margin-top:16px}
+.apidocs-endpoint{scroll-margin-top:16px}.apidocs-perm{font-size:12.5px;color:var(--dim)}
+.apidocs-table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0 14px;display:block;overflow-x:auto}
+.apidocs-table th,.apidocs-table td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.apidocs-table th{font-size:11px;color:var(--dim);font-weight:700;background:var(--soft)}
+.apidocs-usage{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.apidocs-usage article{padding:16px;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;gap:8px}
+.apidocs-usage span{font-size:12px;color:var(--dim)}.apidocs-usage strong{font-size:18px}
+.apidocs-bar{height:6px;border-radius:999px;background:var(--soft);overflow:hidden}.apidocs-bar i{display:block;height:100%;background:var(--acc)}
+.apidocs-keyform{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 10px}
+.apidocs-keyform input{flex:1;min-width:180px;font:inherit;font-size:13px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--panel);color:var(--ink)}
+.apidocs-newkey{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:14px;border:1px solid var(--accLine);border-radius:12px;background:var(--accSoft);margin:8px 0 12px}
+.apidocs-newkey code{max-width:100%;overflow-wrap:anywhere}.apidocs-newkey small{color:var(--dim)}.apidocs-row{display:flex;gap:8px}
+.apidocs-note,.apidocs-warn{padding:12px 14px;border-radius:12px;background:var(--soft);font-size:13px}.apidocs-warn{border-left:3px solid #d68910}
+.apidocs-muted{color:var(--dim);font-size:12.5px}.apidocs-error{color:#b94c38}
+@media(max-width:900px){
+ .apidocs{grid-template-columns:1fr;padding:16px 16px 48px;gap:16px}
+ .apidocs-toc{position:static;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;max-height:none;padding:8px;gap:4px}
+ .apidocs-toc small{display:none}.apidocs-toc a{white-space:nowrap;flex-shrink:0}
+ .apidocs-body section{padding:18px}.apidocs-usage{grid-template-columns:1fr}.apidocs-hero h2{font-size:21px}
+}
+[data-theme='dark'] .apidocs-method.get{background:#173a2b;color:#7fdcae}[data-theme='dark'] .apidocs-method.post{background:#2c2552;color:#b9a8ff}
+[data-theme='dark'] .apidocs-code{background:#0e0e14}

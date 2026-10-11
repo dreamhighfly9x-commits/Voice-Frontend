@@ -10,17 +10,19 @@ export const ICONS = {
   voices:
     'M12 4.2a2.8 2.8 0 0 1 2.8 2.8v4.6a2.8 2.8 0 0 1-5.6 0V7A2.8 2.8 0 0 1 12 4.2zM5.6 11.2a6.4 6.4 0 0 0 12.8 0M12 18v2.4M9 20.4h6',
   clones:
-    'M12 4.2A2.6 2.6 0 0 1 14.6 7v3.6a2.6 2.6 0 0 1-5.2 0V7A2.6 2.6 0 0 1 12 4.2zM6.2 20a5.8 5.8 0 0 1 11.6 0M18.4 6.6l1.8-1.8M19.6 10h2.2',
+    'M10 4.2A2.6 2.6 0 0 1 12.6 7v3.6a2.6 2.6 0 0 1-5.2 0V7A2.6 2.6 0 0 1 10 4.2zM4.2 20a5.8 5.8 0 0 1 11.6 0M16.4 6.6l1.8-1.8M17.6 10h2.2',
   library:
     'M9 18.2V6.4l10-2v11.4M9 18.2a2.3 2.3 0 1 1-4.6 0 2.3 2.3 0 0 1 4.6 0zM19 15.8a2.3 2.3 0 1 1-4.6 0 2.3 2.3 0 0 1 4.6 0z',
   settings:
     'M12 9.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zM12 3.6v2.2M12 18.2v2.2M4.6 12h2.2M17.2 12h2.2M6.7 6.7l1.6 1.6M15.7 15.7l1.6 1.6M17.3 6.7l-1.6 1.6M8.3 15.7l-1.6 1.6',
   admin:
     'M12 3.4l7.2 3v5.8c0 4.1-3.1 6.8-7.2 8.4-4.1-1.6-7.2-4.3-7.2-8.4V6.4l7.2-3zM9.4 12.2l1.9 1.9 3.4-3.6',
+  apidocs:
+    'M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15',
   providers:
     'M4 5h16v5H4zM4 14h16v5H4zM7.5 7.5h.01M7.5 16.5h.01M11 7.5h6M11 16.5h6',
-  credits:
-    'M3.5 7h17v10h-17zM3.5 10.5h17M7 14.2h3',
+  pricing:
+    'M3.8 12.6V4.4a.6.6 0 0 1 .6-.6h8.2l7.6 7.6a1.2 1.2 0 0 1 0 1.7l-6.5 6.5a1.2 1.2 0 0 1-1.7 0L3.8 12.6zM8.2 8.2h.01',
 };
 
 export const SCREEN_TITLES = {
@@ -37,9 +39,10 @@ export const SCREEN_TITLES = {
   ],
   batch: ['Tạo hàng loạt', 'Nhiều nội dung hoặc một nội dung nhiều giọng'],
   library: ['Thư viện âm thanh', 'Tất cả bản ghi đã tạo của bạn'],
-  credits: ['Mua ký tự', 'Bảng giá gói ký tự TTS và nạp thêm hạn mức'],
+  pricing: ['Bảng giá', 'Chọn gói tháng phù hợp và áp dụng mã khuyến mãi'],
   settings: ['Cài đặt tài khoản', 'Hồ sơ, hạn mức và bảo mật'],
   admin: ['Quản trị hệ thống', 'Người dùng, mô hình, hàng đợi và tài nguyên'],
+  apidocs: ['Tài liệu API', 'Gọi DreamHigh Voice từ code: API key, ví dụ và giới hạn'],
   providers: ['API & Nguồn giọng', 'Kết nối các dịch vụ TTS và đồng bộ giọng nói vào DreamHigh Voice.'],
 };
 
@@ -64,9 +67,10 @@ export const NAV_GROUPS = [
   {
     title: 'HỆ THỐNG',
     items: [
-      { id: 'credits', label: 'Mua ký tự' },
+      { id: 'pricing', label: 'Bảng giá' },
       { id: 'settings', label: 'Cài đặt tài khoản' },
       { id: 'providers', label: 'API & Nguồn giọng' },
+      { id: 'apidocs', label: 'Tài liệu API' },
       { id: 'admin', label: 'Quản trị' },
     ],
   },
@@ -285,14 +289,6 @@ export const MODELS = [
   { name: 'OCR tài liệu scan', note: 'THỬ NGHIỆM', dot: '#f0a020' },
 ];
 
-// Price list (VND). Edit here; the credits screen derives per-1k prices and savings from it.
-export const CREDIT_BASE_PRICE_PER_1K = 490;
-export const CREDIT_PACKAGES = [
-  { id: 'starter', name: 'Khởi đầu', chars: 100000, price: 49000, note: 'Dùng thử, đọc bài ngắn' },
-  { id: 'basic', name: 'Cơ bản', chars: 500000, price: 199000, note: 'Cá nhân, podcast hằng tuần' },
-  { id: 'pro', name: 'Chuyên nghiệp', chars: 2000000, price: 690000, note: 'Kênh video, sách nói', popular: true },
-  { id: 'business', name: 'Doanh nghiệp', chars: 10000000, price: 2990000, note: 'Đội nhóm, tạo hàng loạt' },
-];
 
 export const QUOTA_LIMIT_DEFAULT = 200000;
 export const QUOTA_USED = 124500;

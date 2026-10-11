@@ -1,0 +1,86 @@
+/* Entrance motion (genmax.io-style): content eases in instead of popping.
+   Only runs when an element is inserted (screen/tab switch, new page of a list),
+   never on plain re-renders. `backwards` fill means nothing lingers after the
+   animation, so hover/press effects (transform, translate, scale) keep working. */
+:root{--dh-ease:cubic-bezier(.22,.61,.36,1)}
+@keyframes dh-rise{from{opacity:0;translate:0 10px}to{opacity:1;translate:0 0}}
+@keyframes dh-soft{from{opacity:0;translate:0 6px}to{opacity:1;translate:0 0}}
+@keyframes dh-pop{from{opacity:0;scale:.97}to{opacity:1;scale:1}}
+@keyframes dh-fade{from{opacity:0}to{opacity:1}}
+
+/* Lists, grids and table rows: staggered rise (first 12 items, ~28 ms apart). */
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr){animation:dh-rise .42s var(--dh-ease) backwards;animation-delay:calc(var(--dh-i,0) * 28ms)}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(2){--dh-i:1}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(3){--dh-i:2}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(4){--dh-i:3}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(5){--dh-i:4}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(6){--dh-i:5}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(7){--dh-i:6}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(8){--dh-i:7}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(9){--dh-i:8}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(10){--dh-i:9}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(11){--dh-i:10}
+:is(.vl-grid>*,.prov-grid>*,.prov-list>*,.overview-grid>*,.admin-stats>*,.admin-users>*,.admin-audit>article,.admin-logs>article,.batch-item,[data-testid=batch-row],.studio-history-item,.recent-item,.ranking-row,.studio-dict-row,.quota-row,.data-table-wrap tbody tr):nth-child(12){--dh-i:11}
+
+/* Tab content and panels. */
+:is(.workspace-card,.admin-card,.admin-columns,.vl-filters,.vl-results,.studio-history,.dashboard-middle,.dashboard-bottom){animation:dh-soft .36s var(--dh-ease) backwards}
+
+/* Dialogs and their backdrop. */
+.prov-modal{animation:dh-fade .22s var(--dh-ease) backwards}
+.prov-modal>*{animation:dh-pop .28s var(--dh-ease) backwards}
+
+/* Cards lift slightly on hover. */
+:is(.vl-card,.prov-card,.metric-card,.portfolio-card){transition:translate .28s var(--dh-ease),box-shadow .28s var(--dh-ease),border-color .28s var(--dh-ease)}
+:is(.vl-card,.prov-card):hover{translate:0 -2px;box-shadow:0 10px 24px #1f3d7314}
+
+/* Library grid dims (no jump) while the next page/search result loads. */
+.vl-grid{transition:opacity .2s var(--dh-ease)}.vl-grid[aria-busy=true]{opacity:.55}
+
+/* <details> (Chi tiết, phân loại cá nhân…) open/close smoothly where supported. */
+@supports (interpolate-size:allow-keywords){
+  :root{interpolate-size:allow-keywords}
+  details::details-content{block-size:0;overflow:clip;transition:block-size .3s var(--dh-ease),content-visibility .3s allow-discrete}
+  details[open]::details-content{block-size:auto}
+}
+
+/* Smooth scrolling for in-page jumps. */
+html{scroll-behavior:smooth}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- Dropdowns (chọn giọng, chọn mô hình, bộ lọc…) -------------------------
+   Customizable <select> (Chromium 135+): the picker becomes stylable, so it can
+   fade/slide open instead of the OS popup snapping in. Other browsers keep the
+   native control unchanged. Existing select box styles (padding/border) still apply. */
+@supports (appearance: base-select) {
+  select, ::picker(select) { appearance: base-select; }
+  select { display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    transition: border-color .2s var(--dh-ease), box-shadow .2s var(--dh-ease), background-color .2s var(--dh-ease); }
+  select:disabled { cursor: not-allowed; }
+  select:hover:not(:disabled) { border-color: var(--brand-sky); }
+  select:open { border-color: var(--brand-sky); box-shadow: 0 0 0 3px #3aa0e626; }
+  select::picker-icon { color: var(--dim, #6b7280); transition: rotate .25s var(--dh-ease), color .2s; margin-inline-start: auto; }
+  select:open::picker-icon { rotate: 180deg; color: var(--brand-sky); }
+
+  ::picker(select) {
+    border: 1px solid var(--line, #e5e7eb); border-radius: 12px; background: var(--panel, #fff); color: var(--ink, #111);
+    padding: 4px; margin-block: 6px; max-block-size: min(360px, 60vh); overflow: auto; scrollbar-width: thin;
+    box-shadow: 0 14px 34px #0f1f3d26, 0 2px 6px #0f1f3d14;
+    opacity: 0; translate: 0 -6px; scale: .98; transform-origin: top center;
+    transition: opacity .2s var(--dh-ease), translate .2s var(--dh-ease), scale .2s var(--dh-ease),
+                overlay .2s allow-discrete, display .2s allow-discrete;
+  }
+  select:open::picker(select) { opacity: 1; translate: 0 0; scale: 1; }
+  @starting-style { select:open::picker(select) { opacity: 0; translate: 0 -6px; scale: .98; } }
+
+  option { padding: 8px 10px; border-radius: 8px; font-size: inherit; gap: 8px;
+    transition: background-color .15s var(--dh-ease), color .15s var(--dh-ease); }
+  option:hover, option:focus-visible { background: var(--soft, #f3f5f9); outline: none; }
+  option:checked { background: linear-gradient(115deg, #1f3d7314, #3aa0e61f); color: var(--brand-navy); font-weight: 600; }
+  option::checkmark { color: var(--brand-sky); }
+  [data-theme=dark] option:checked { color: #9fd3fb; }
+}
+@media (prefers-reduced-motion:reduce) { ::picker(select) { transition: none; } }

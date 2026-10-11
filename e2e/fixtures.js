@@ -1,7 +1,7 @@
 import { test as base, expect } from '@playwright/test';
 
-// Voice-Frontend now requires login for every screen (AuthContext.jsx /
-// App.jsx `status !== 'authenticated'` gate). Point these at a real local
+// The app workspace requires login; the root is now a public landing page.
+// Point these at a real local
 // account — e.g. one minted by `Voice-Backend/cmd/reset-local-password
 // -email <you>` — via env vars so no credential is committed to the repo.
 export const E2E_EMAIL = process.env.E2E_EMAIL || '';
@@ -22,10 +22,10 @@ export const test = base.extend({
       }
       const context = await browser.newContext();
       const page = await context.newPage();
-      await page.goto('/');
-      await page.getByLabel('Email').fill(E2E_EMAIL);
-      await page.getByLabel('Mật khẩu').fill(E2E_PASSWORD);
-      await page.getByRole('button', { name: 'Đăng nhập' }).click();
+      await page.goto('/login');
+      await page.locator('#auth-email').fill(E2E_EMAIL);
+      await page.locator('#auth-password').fill(E2E_PASSWORD);
+      await page.locator('button[type=submit]').click();
       await expect(page.getByText(/Sẵn sàng/)).toBeVisible({ timeout: 20000 });
       await use(page);
       await context.close();

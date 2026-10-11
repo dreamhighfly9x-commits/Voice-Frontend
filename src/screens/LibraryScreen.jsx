@@ -42,7 +42,7 @@ export default function LibraryScreen({ animStyle, items, libFilter, onFilter, p
               <span style={{ fontSize: 12, color: 'var(--dim2)' }}>{r.meta}</span>
             </div>
             <Waveform n={24} seed={r.seed} active={playingId === r.id ? 0.45 : 1} live={playingId === r.id} height={32} />
-            <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11.5, color: 'var(--dim2)' }}>{r.dur}</span>
+            <span style={{ fontFamily: 'AppArial, Arial, Helvetica, sans-serif', fontSize: 11.5, color: 'var(--dim2)' }}>{r.dur}</span>
             <div style={{ display: 'flex', gap: 7 }}>
               <DeleteRecording recording={r} onDelete={onDelete}/>
               <AudioDownload url={r.url} className="tap tap-line" style={{ border: '1px solid var(--line)', borderRadius: 8, padding: '7px 10px', fontSize: 12, fontWeight: 600 }} />

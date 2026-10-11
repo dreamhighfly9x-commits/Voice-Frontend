@@ -1,3 +1,11 @@
+/* "AppArial": Arial with heavy weights pinned to Arial Bold. Plain Arial at
+   font-weight 800/900 resolves to Arial Black on Windows, which lacks stacked
+   Vietnamese diacritics (ổ, ẩ, ễ…) and falls back to a serif glyph mid-word. */
+@font-face { font-family: 'AppArial'; src: local('Arial'), local('ArialMT'); font-weight: 100 600; font-style: normal; }
+@font-face { font-family: 'AppArial'; src: local('Arial Bold'), local('Arial-BoldMT'); font-weight: 650 1000; font-style: normal; }
+@font-face { font-family: 'AppArial'; src: local('Arial Italic'), local('Arial-ItalicMT'); font-weight: 100 600; font-style: italic; }
+@font-face { font-family: 'AppArial'; src: local('Arial Bold Italic'), local('Arial-BoldItalicMT'); font-weight: 650 1000; font-style: italic; }
+
 :root {
   --bg: #f5f5f8;
   --panel: #ffffff;
@@ -82,7 +90,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: 'Inter', sans-serif;
+  font-family: AppArial, Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.01em;
 }
@@ -132,7 +140,7 @@ input[type='range']::-moz-range-thumb {
 
 textarea,
 input[type='text'] {
-  font-family: 'Inter', sans-serif;
+  font-family: AppArial, Arial, Helvetica, sans-serif;
   background: transparent;
   color: var(--ink);
 }

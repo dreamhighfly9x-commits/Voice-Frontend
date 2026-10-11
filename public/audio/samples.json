@@ -1,0 +1,20 @@
+[
+  {
+    "file": "voice-1.wav",
+    "preset": "Minh Đức — Nam · Bắc · Phong cách tin tức",
+    "text": "Mỗi ý tưởng đều xứng đáng được lắng nghe. Với DreamHigh Voice, hãy biến những dòng chữ thành câu chuyện mang thanh âm của riêng bạn.",
+    "engine": "VieNeu v3 Turbo"
+  },
+  {
+    "file": "voice-2.wav",
+    "preset": "Phạm Tuyên — Nam · Bắc · Phong cách tự nhiên",
+    "text": "Mỗi ý tưởng đều xứng đáng được lắng nghe. Với DreamHigh Voice, hãy biến những dòng chữ thành câu chuyện mang thanh âm của riêng bạn.",
+    "engine": "VieNeu v3 Turbo"
+  },
+  {
+    "file": "voice-3.wav",
+    "preset": "Thái Sơn — Nam · Nam · Phong cách kể chuyện",
+    "text": "Mỗi ý tưởng đều xứng đáng được lắng nghe. Với DreamHigh Voice, hãy biến những dòng chữ thành câu chuyện mang thanh âm của riêng bạn.",
+    "engine": "VieNeu v3 Turbo"
+  }
+]

@@ -64,15 +64,13 @@ body{background:var(--frame)}
 .dashboard .daily-actions button+button,[data-theme=dark] .dashboard .daily-actions button+button{background:var(--soft);color:var(--accDeep);box-shadow:inset 0 0 0 1px var(--line)}
 .dh-logo-name>span{color:#315bd9}.dh-logo-tagline{color:#536580}
 .header-brand .dh-logo-name b{color:#142749}
-.header-brand .dh-logo-name>span{background:linear-gradient(110deg,#1262bf,#663ad0);background-clip:text;color:transparent;font-weight:750}
-.header-brand .dh-logo-mark stop:first-child{stop-color:#268add}.header-brand .dh-logo-mark stop:last-child{stop-color:#6542d3}
+.header-brand .dh-logo-name>span{background:linear-gradient(110deg,#1f3d73,#3aa0e6);background-clip:text;color:transparent;font-weight:750}
 .nav-rail .brand-mark .dh-logo{color:#f5f7fc}
 .nav-rail.expanded .brand-mark .dh-logo-name b{color:#fff}
 .nav-rail.expanded .brand-mark .dh-logo-name>span{color:#73e5f4;font-weight:750}
 .nav-rail.expanded .brand-mark .dh-logo-tagline{color:#b9c7df}
-.dh-logo-mark{filter:drop-shadow(0 5px 12px #456b9916)}
 .auth-brand-logo{--ink:#2d3546;background:#eef0f8;border-color:#dce2f0}
 [data-theme=dark] .header-brand .dh-logo-name b{color:#f5f8ff}
-[data-theme=dark] .header-brand .dh-logo-name>span{background:linear-gradient(110deg,#70e6f5,#c1acff);background-clip:text;color:transparent}
+[data-theme=dark] .header-brand .dh-logo-name>span{background:linear-gradient(110deg,#8fd0fa,#3aa0e6);background-clip:text;color:transparent}
 [data-theme=dark] .header-brand .dh-logo-tagline{color:#b2bdd3}
 [data-theme=dark] .create-promo{box-shadow:0 8px 0 -3px #3a435d,0 15px 0 -8px #2d354d}

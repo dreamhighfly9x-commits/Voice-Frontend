@@ -7,20 +7,29 @@ import GenerateButton from '../components/GenerateButton';
 import ExpressionTextarea from '../components/ExpressionTextarea';
 import VoiceOptions from '../components/VoiceOptions';
 import GenMaxEnhance from '../components/GenMaxEnhance';
+import VoiceBrowser from '../components/VoiceBrowser';
+import ProviderLogo from '../components/ProviderLogo';
+import StudioPlayer from '../components/StudioPlayer';
+import HistoryPlayback from '../components/HistoryPlayback';
+import {expiryLabel,recordingFacts} from '../lib/expiry';
+import {ELEVEN_TAG_GROUPS} from '../lib/elevenTags';
 import {defaultOptions} from '../lib/voiceControls';
 import './StudioScreen.css';
+
+const isLatestModel=m=>/eleven.*v4/i.test(m||'');
 
 function voiceSource(v, fallback) {
   const cloud=v.id.startsWith('prov:')||v.id.startsWith('ext_');
   const tags=(v.tags||'').split(' · ');
-  return {provider:v.provider_name||(cloud?tags[1]||'Cloud TTS':'VieNeu Local'),model:v.model_name||(cloud?tags[2]||'Model của giọng':fallback),language:v.language||tags[0]||'Tiếng Việt'};
+  return {provider:(v.metadata?.engine?`DreamHigh · ${v.metadata.engine==='elevenlabs'?'ElevenLabs':v.metadata.engine==='minimax'?'MiniMax':'CapCut'}`:'')||v.provider_name||(cloud?tags[1]||'Cloud TTS':'VieNeu Local'),model:v.model_name||(cloud?tags[2]||'Model của giọng':fallback),language:v.language||tags[0]||'Tiếng Việt'};
 }
 
 export default function StudioScreen({modelName,maxChars,voiceLanguage='Tiếng Việt',voiceControls=[],voiceOptions={},onVoiceOption,
  dictionary,onDictionary,userId,onReplace,onUndo,canUndo,effectiveChars,animStyle,text,onText,onNormalize,onAutoSplit,charLabel,estDuration,segmentCountLabel,
- onPreview,onGenerate,generating,engineReady,results,playingId,onPlay,onDelete,quickVoices=[],voices=quickVoices,voice,onPickVoice,onGoVoices,queueLabel}) {
- const [tab,setTab]=useState('settings'),[taskName,setTaskName]=useState(''),[toolsOpen,setToolsOpen]=useState(false),[message,setMessage]=useState('');
+ onPreview,onGenerate,generating,engineReady,results,playingId,onPlay,getAudio,onDelete,quickVoices=[],voices=quickVoices,voice,onPickVoice,onGoVoices,queueLabel}) {
+ const [tab,setTab]=useState('settings'),[taskName,setTaskName]=useState(''),[toolsOpen,setToolsOpen]=useState(false),[message,setMessage]=useState(''),[browseOpen,setBrowseOpen]=useState(false),[pending,setPending]=useState(null),[latestId,setLatestId]=useState(null),[loadingId,setLoadingId]=useState(null);
  const [names,setNames]=useState(()=>{try{const saved=JSON.parse(localStorage.getItem(`studio-download-names:${userId}`)||'{}');return saved&&typeof saved==='object'&&!Array.isArray(saved)?Object.fromEntries(Object.entries(saved).filter(([,value])=>typeof value==='string')):{};}catch{return {};}});
+ const latest=latestId?results.find(r=>r.id===latestId):null;
  const catalog=voices.map(v=>({...v,...voiceSource(v,modelName)}));
  const selected=catalog.find(v=>v.id===voice);
  const provider=selected?.provider||catalog[0]?.provider;
@@ -36,15 +45,15 @@ export default function StudioScreen({modelName,maxChars,voiceLanguage='Tiếng 
    const clean=pieces.map(s=>s.trim()).filter(Boolean);onReplace(clean.join('\n\n'));setMessage(`Đã tách ${clean.length} ${mode==='lines'?'dòng':'câu'} trong văn bản. Tạo âm thanh vẫn xuất một bản ghi.`);
  }
  async function create(){
-   const filename=taskName.trim();const record=await onGenerate();
-   if(record?.id){if(filename){const next={...names,[record.id]:filename};setNames(next);try{localStorage.setItem(`studio-download-names:${userId}`,JSON.stringify(next));}catch{/* Download naming still works during this visit. */}}setTab('history');}
+   const filename=taskName.trim();setTab('history');setPending({voice:selected?.name||'',chars:text.trim().length});
+   let record;try{record=await onGenerate();}finally{setPending(null);}
+   if(record?.id){setLatestId(record.id);if(filename){const next={...names,[record.id]:filename};setNames(next);try{localStorage.setItem(`studio-download-names:${userId}`,JSON.stringify(next));}catch{/* Download naming still works during this visit. */}}setTab('history');}
  }
  return <div className="voice-studio" style={animStyle}>
    <section className="studio-editor" aria-label="Soạn nội dung tạo giọng">
      <div className="studio-editor-top"><label className="studio-task-name"><span aria-hidden="true">◇</span><input aria-label="Tên file tải về" placeholder="Tên task (tên file tải về)" value={taskName} maxLength={100} disabled={generating} onChange={e=>setTaskName(e.target.value)}/></label><div className="studio-split-actions"><button disabled={generating||!text.trim()} onClick={()=>split('lines')}>Tách theo dòng</button><button className="studio-accent-button" disabled={generating||!text.trim()} onClick={()=>split('sentences')}>✂ Tách theo câu</button></div></div>
-     <div className="studio-writing"><ExpressionTextarea providerType={selected?.provider_type} emotionTags={selected?.provider_type?selected?.capabilities?.emotion_tags:undefined} compact voiceId={voice} disabled={generating} aria-label="Nội dung chuyển thành giọng nói" value={text} onChange={onText} placeholder="Dán hoặc nhập nội dung bạn muốn chuyển thành giọng nói…"/>
+     <div className="studio-writing"><ExpressionTextarea toolbarExtra={selected?.provider_type==='genmax'&&selected?.capabilities?.emotion_tags?<GenMaxEnhance voice={voice} text={text} onReplace={onReplace} disabled={generating}/>:null} tagGroups={selected?.metadata?.engine==='elevenlabs'&&selected?.capabilities?.emotion_tags?ELEVEN_TAG_GROUPS:undefined} providerType={selected?.provider_type} emotionTags={selected?.provider_type?selected?.capabilities?.emotion_tags:undefined} compact voiceId={voice} disabled={generating} aria-label="Nội dung chuyển thành giọng nói" value={text} onChange={onText} placeholder="Dán hoặc nhập nội dung bạn muốn chuyển thành giọng nói…"/>
        {chars>maxChars&&<p role="alert" className="studio-error">Nội dung vượt giới hạn {maxChars.toLocaleString('vi-VN')} ký tự/lần tạo. Hãy rút ngắn nội dung; vẫn có thể nghe thử đoạn đầu.</p>}
-       {selected?.provider_type==='genmax'&&selected?.capabilities?.emotion_tags&&<GenMaxEnhance voice={voice} text={text} onReplace={onReplace} disabled={generating}/>}
        {message&&<p className="studio-notice" role="status">{message}</p>}
      </div>
      {toolsOpen&&<StudioTools text={text} onReplace={onReplace} onNormalize={onNormalize} onAutoSplit={onAutoSplit} dictionary={dictionary} onDictionary={onDictionary} userId={userId} disabled={generating}/>}
@@ -52,10 +61,11 @@ export default function StudioScreen({modelName,maxChars,voiceLanguage='Tiếng 
    </section>
    <aside className="studio-settings"><div className="studio-panel-tabs" role="tablist" aria-label="Bảng điều khiển tạo giọng"><button id="studio-settings-tab" role="tab" aria-selected={tab==='settings'} aria-controls="studio-settings-panel" onClick={()=>setTab('settings')}>☷ Cài đặt</button><button id="studio-history-tab" role="tab" aria-selected={tab==='history'} aria-controls="studio-history-panel" onClick={()=>setTab('history')}>◷ Lịch sử <span>{results.length}</span></button></div>
      <section role="tabpanel" id="studio-settings-panel" aria-labelledby="studio-settings-tab" hidden={tab!=='settings'}>
-       <div className="studio-setting-group"><h3>Nhà cung cấp</h3><div className="studio-provider-options">{[...new Set(catalog.map(v=>v.provider))].map(name=><button key={name} aria-pressed={provider===name} disabled={generating} onClick={()=>onPickVoice(catalog.find(v=>v.provider===name).id)}>{name}</button>)}</div>{!catalog.length&&<p>Đang tải thư viện giọng…</p>}</div>
-       <label className="studio-field">Chọn giọng nói<select value={voice} disabled={generating||!catalog.length} onChange={e=>onPickVoice(e.target.value)}>{!selected&&<option value="">Chọn giọng</option>}{modelVoices.map(v=><option key={v.id} value={v.id}>{v.name}</option>)}</select></label>
+       <div className="studio-setting-group"><h3>Nhà cung cấp</h3><div className="studio-provider-options">{[...new Set(catalog.map(v=>v.provider))].map(name=><button key={name} aria-pressed={provider===name} disabled={generating} onClick={()=>onPickVoice(catalog.find(v=>v.provider===name).id)}><ProviderLogo name={name}/><span>{name}</span></button>)}</div>{!catalog.length&&<p>Đang tải thư viện giọng…</p>}</div>
+       {selected?.metadata?.engine?<label className="studio-field">Chọn giọng nói<button type="button" className="studio-voice-trigger" aria-haspopup="dialog" disabled={generating} onClick={()=>setBrowseOpen(true)}><span>{selected.name}</span></button></label>:<label className="studio-field">Chọn giọng nói<select value={voice} disabled={generating||!catalog.length} onChange={e=>onPickVoice(e.target.value)}>{!selected&&<option value="">Chọn giọng</option>}{modelVoices.map(v=><option key={v.id} value={v.id}>{v.name}</option>)}</select></label>}
+       {browseOpen&&<VoiceBrowser initialSource={selected?.metadata?.is_clone?'Giọng nhân bản':selected?.metadata?.engine==='minimax'?'MiniMax':selected?.metadata?.engine==='capcut'?'CapCut':'ElevenLabs'} voice={voice} playingId={playingId} onPlay={onPlay} onPick={onPickVoice} onClose={()=>setBrowseOpen(false)}/>}
        <button className="studio-library-link" onClick={onGoVoices}>Xem thư viện giọng ↗</button>
-       <label className="studio-field">Chọn mô hình<select value={model||''} disabled={generating||models.length<2} onChange={e=>onPickVoice((providerVoices.find(v=>v.model===e.target.value&&v.name===selected?.name)||providerVoices.find(v=>v.model===e.target.value)).id)}>{models.map(m=><option key={m}>{m}</option>)}</select></label>
+       <label className="studio-field studio-model-field">Chọn mô hình<span className="studio-model-select"><select value={model||''} disabled={generating||models.length<2} onChange={e=>onPickVoice((providerVoices.find(v=>v.model===e.target.value&&v.name===selected?.name)||providerVoices.find(v=>v.model===e.target.value)).id)}>{models.map(m=><option key={m} value={m}>{m}</option>)}</select>{isLatestModel(model)&&<span className="studio-model-badge">Mới nhất</span>}</span></label>
        <label className="studio-field">Ngôn ngữ của giọng<select value={language||''} disabled={generating||languages.length<2} onChange={e=>onPickVoice(modelVoices.find(v=>v.language===e.target.value).id)}>{languages.length?languages.map(l=><option key={l}>{l}</option>):<option value="">{voiceLanguage}</option>}</select></label>
        <div className="studio-voice-controls"><VoiceOptions specs={selected?.capabilities?.options} controls={voiceControls} values={voiceOptions} onChange={onVoiceOption} disabled={generating}/>{!voiceControls.length&&<p className="studio-control-hint">Giọng này dùng thông số mặc định của model, chưa hỗ trợ chỉnh tốc độ hoặc độ ổn định.</p>}</div>
        <button className="studio-reset" disabled={generating||!voiceControls.length} onClick={()=>Object.entries(defaultOptions(voiceControls)).forEach(([key,value])=>onVoiceOption(key,value))}>↶ Đặt lại thông số</button>
@@ -63,7 +73,10 @@ export default function StudioScreen({modelName,maxChars,voiceLanguage='Tiếng 
        <div className="studio-status" role="status"><strong>{generating?'Đang xử lý…':'Trạng thái tạo giọng'}</strong><span>{queueLabel}</span><small>WAV · Tối đa {maxChars.toLocaleString('vi-VN')} ký tự/lần</small></div>
        <details className="studio-quick-voices"><summary>Giọng chọn nhanh</summary>{quickVoices.map(v=><button key={v.id} data-testid="quick-voice-row" aria-pressed={voice===v.id} disabled={generating} onClick={()=>onPickVoice(v.id)}>{v.name}</button>)}</details>
      </section>
-     <section role="tabpanel" id="studio-history-panel" aria-labelledby="studio-history-tab" hidden={tab!=='history'}><h3>Bản ghi đã tạo</h3>{!results.length&&<p className="studio-control-hint">Chưa có bản ghi. Nhập văn bản và bấm Tạo âm thanh.</p>}{results.map(r=><article key={r.id} className="studio-history-item" data-testid="studio-result-row"><div><PlayButton active={playingId===r.id} size={34} onClick={()=>onPlay(r.id)}/><strong title={r.title}>{names[r.id]||r.title}</strong><small>{r.dur}</small></div><p>{r.meta}</p><div className="studio-history-actions"><AudioDownload url={r.url} filename={names[r.id]}/><DeleteRecording recording={r} onDelete={onDelete}/></div></article>)}</section>
+     <section role="tabpanel" id="studio-history-panel" aria-labelledby="studio-history-tab" hidden={tab!=='history'}><h3>Bản ghi đã tạo</h3><p className="studio-expiry-note"><span aria-hidden="true">⏱</span><span>Bản ghi được tự động xóa sau <strong>48 giờ</strong> kể từ khi tạo. Hãy tải WAV về nếu cần giữ lâu hơn.</span></p>
+       {pending&&<div className="studio-loading-card" role="status" aria-live="polite"><div><span className="studio-loading-spin" aria-hidden="true"/><div><strong>Đang tạo âm thanh…</strong><small>{[pending.voice,pending.chars.toLocaleString('vi-VN')+' ký tự'].filter(Boolean).join(' · ')}</small></div></div><div className="studio-loading-wave" aria-hidden="true">{Array.from({length:24},(_,i)=><i key={i} style={{'--i':i}}/>)}</div><div className="studio-loading-bar" aria-hidden="true"/></div>}
+       {latest&&!pending&&<StudioPlayer key={latest.id} recording={latest} filename={names[latest.id]} autoPlay/>}
+       {!results.length&&!pending&&<p className="studio-control-hint">Chưa có bản ghi. Nhập văn bản và bấm Tạo âm thanh.</p>}{results.filter(r=>r.id!==latest?.id).map(r=><article key={r.id} className="studio-history-item" data-testid="studio-result-row"><div><PlayButton active={playingId===r.id} size={34} onClick={async()=>{setLoadingId(r.id);try{await onPlay(r.id);}finally{setLoadingId(id=>id===r.id?null:id);}}}/><strong title={r.title}>{names[r.id]||r.title}</strong><small>{r.dur}</small></div><div className="studio-history-facts">{recordingFacts(r)&&<small>{recordingFacts(r)}</small>}{(e=>e&&<small className={`studio-expiry${e.urgent?' is-urgent':''}`} title={'Tự động xóa lúc '+new Date(r.expires_at*1000).toLocaleString('vi-VN')}>⏱ {e.text}</small>)(expiryLabel(r.expires_at))}</div><HistoryPlayback loading={loadingId===r.id&&playingId!==r.id} playing={playingId===r.id} getAudio={getAudio}/><p>{r.meta}</p><div className="studio-history-actions"><AudioDownload url={r.url} filename={names[r.id]}/><DeleteRecording recording={r} onDelete={onDelete}/></div></article>)}</section>
    </aside>
  </div>;
 }

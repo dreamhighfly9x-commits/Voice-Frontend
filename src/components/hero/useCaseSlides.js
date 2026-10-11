@@ -1,0 +1,17 @@
+// Slider content. To use a real image, drop it in public/images/use-cases/ and set `image`
+// (e.g. '/images/use-cases/ai-dubbing.webp', ~960x1200, blue-white grading). Empty `image`
+// falls back to the built-in vector illustration matching `id` (see UseCaseArt.jsx).
+// Optional `popImage`: the cover's character cut out (transparent, cropped tight). On hover it
+// appears centred in the card over the tilted cover
+// (3D hover effect). Vector covers fall back to the UseCasePop object; real covers without
+// `popImage` simply skip the pop layer.
+export const USE_CASE_SLIDES = [
+  { id: 'narration', category: 'VIDEO NARRATION', title: 'Thuyết Minh Video', description: 'Tạo thuyết minh cho video hướng dẫn, giới thiệu và nội dung học tập.', image: '/images/use-cases/narration-cover.webp', popImage: '/images/use-cases/narration-character.webp', altText: 'Nữ người dẫn áo vest trắng cầm máy tính bảng thuyết minh giữa các màn hình video nổi', accent: '#0EA5E9' },
+  { id: 'movie-review', category: 'MOVIE REVIEW', title: 'Review & Tóm Tắt Phim', description: 'Tạo giọng kể truyền cảm cho nội dung review và phân tích phim.', image: '/images/use-cases/movie-review-cover.webp', popImage: '/images/use-cases/movie-review-character.webp', altText: 'Nam reviewer đeo kính cầm bỏng ngô và bảng clapper trong rạp chiếu phim', accent: '#6366F1' },
+  { id: 'tiktok', category: 'TIKTOK CREATOR', title: 'TikTok Content', description: 'Tạo voiceover cho video ngắn, storytelling và nội dung viral.', image: '/images/use-cases/tiktok-cover.webp', popImage: '/images/use-cases/tiktok-character.webp', altText: 'Nữ creator tóc highlight xanh áo khoác denim nháy mắt quay video dọc bằng điện thoại', accent: '#06B6D4' },
+  { id: 'youtube', category: 'YOUTUBE CREATOR', title: 'YouTube Video', description: 'Tạo giọng đọc cho video kiến thức, hướng dẫn và giải trí.', image: '/images/use-cases/youtube-cover.webp', popImage: '/images/use-cases/youtube-character.webp', altText: 'Nam YouTuber áo sơ mi xanh cầm máy ảnh tại bàn dựng video với các khung video nổi', accent: '#3B82F6' },
+  { id: 'ai-dubbing', category: 'AI DUBBING', title: 'Lồng Tiếng AI', description: 'Tạo giọng lồng tiếng tự nhiên cho video và nội dung sáng tạo.', image: '/images/use-cases/ai-dubbing-cover.webp', popImage: '/images/use-cases/ai-dubbing-character.webp', altText: 'Nữ biên tập viên đeo tai nghe nói vào microphone, sóng âm chạy vào timeline dựng video', accent: '#38BDF8' },
+  { id: 'podcast', category: 'PODCAST CREATOR', title: 'Sáng Tạo Podcast', description: 'Chuyển kịch bản thành nội dung podcast với giọng đọc AI.', image: '/images/use-cases/podcast-cover.webp', popImage: '/images/use-cases/podcast-character.webp', altText: 'Nam podcaster đeo tai nghe xanh cười nói vào microphone trong studio xanh trắng', accent: '#2563EB' },
+  { id: 'audiobook', category: 'AUDIOBOOK', title: 'Sách Nói AI', description: 'Chuyển nội dung văn bản thành trải nghiệm nghe tiện lợi.', image: '/images/use-cases/audiobook-cover.webp', popImage: '/images/use-cases/audiobook-character.webp', altText: 'Người phụ nữ lớn tuổi đeo tai nghe nhắm mắt nghe sách nói bên cửa sổ', accent: '#22D3EE' },
+  { id: 'e-learning', category: 'E-LEARNING', title: 'Bài Giảng & Học Tập', description: 'Tạo giọng thuyết minh cho bài giảng và tài liệu đào tạo.', image: '/images/use-cases/e-learning-cover.webp', popImage: '/images/use-cases/e-learning-character.webp', altText: 'Thầy giáo đeo kính áo gile xanh navy cầm laptop giới thiệu khóa học trực tuyến', accent: '#2563EB' },
+];

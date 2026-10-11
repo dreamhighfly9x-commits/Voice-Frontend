@@ -1,0 +1,17 @@
+/* Pricing shortcut in the sidebar footer, beside the user: logo sky-blue so it reads as a call to action. */
+.nav-rail .rail-cart{color:#8fd0fa}
+.nav-rail .rail-cart{transition:color .18s ease,background-color .18s ease}
+/* Hover only recolours/tints - no transform, so the icon never shifts out of line. */
+.nav-rail .rail-cart:hover,.nav-rail .rail-cart:focus-visible{color:#fff;background-color:rgba(143,208,250,.16)}
+.nav-rail .rail-cart[aria-current=page]{color:#fff;background:linear-gradient(110deg,#1f3d73,#3aa0e6)}
+/* Icon-only cart sits on the same row as the avatar/name button. */
+.rail-user-row{display:flex;align-items:center;gap:4px;width:100%;min-width:0}
+.rail-user-row>button:first-child{flex:1 1 auto;min-width:0}
+/* Always centre the glyph: expanded rail left-aligns every button (justify-content:flex-start). */
+.nav-rail .rail-user-row .rail-cart{flex:none;width:32px;height:32px;min-height:32px;padding:0;border-radius:10px;justify-content:center;align-items:center}
+/* Collapsed rail is ~56px wide: shrink avatar and cart so both fit side by side without clipping. */
+.nav-rail:not(.expanded) .rail-user-row{gap:2px;justify-content:center}
+.nav-rail:not(.expanded) .rail-user-row>button:first-child{flex:none;width:auto;padding:0}
+.nav-rail:not(.expanded) .rail-user-row .user-initial{width:28px;height:28px;font-size:12px}
+.nav-rail:not(.expanded) .rail-user-row .rail-cart{width:28px;height:28px;min-height:28px}
+.nav-rail:not(.expanded) .rail-user-row .rail-cart svg{width:18px;height:18px}

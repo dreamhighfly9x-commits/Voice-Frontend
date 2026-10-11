@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import Waveform from './Waveform';
+import HistoryPlayback from './HistoryPlayback';
 import AudioDownload from './AudioDownload';
 import './LatestRecording.css';
 
@@ -7,8 +9,9 @@ function newest(recordings) {
 }
 
 // Fills the right side of the home greeting: the most recent recording, ready to replay or download.
-export default function LatestRecording({recordings = [], playingId, onPlay, onNavigate}) {
+export default function LatestRecording({recordings = [], playingId, onPlay, onNavigate, getAudio}) {
   const latest = newest(recordings);
+  const [loadingId, setLoadingId] = useState(null);
   if (!latest) {
     return <aside className="latest-recording latest-recording-empty" aria-label="Bản đọc gần nhất">
       <span className="latest-label">Bản đọc gần nhất</span>
@@ -21,9 +24,11 @@ export default function LatestRecording({recordings = [], playingId, onPlay, onN
     <span className="latest-label">Bản đọc gần nhất</span>
     <strong className="latest-title" title={latest.title}>{latest.title}</strong>
     <small className="latest-meta">{latest.meta}</small>
-    <Waveform n={28} seed={latest.seed || 1} active={playing} live={playing} height={30}/>
+    {playing || loadingId === latest.id
+      ? <HistoryPlayback loading={loadingId === latest.id && !playing} playing={playing} getAudio={getAudio}/>
+      : <Waveform n={28} seed={latest.seed || 1} active={false} height={30}/>}
     <div className="latest-actions">
-      <button type="button" className="latest-play" aria-label={(playing ? 'Dừng ' : 'Nghe ') + latest.title} onClick={() => onPlay(latest.id)}>{playing ? '■' : '▷'}</button>
+      <button type="button" className="latest-play" aria-label={(playing ? 'Dừng ' : 'Nghe ') + latest.title} onClick={async () => { setLoadingId(latest.id); try { await onPlay(latest.id); } finally { setLoadingId(null); } }}>{playing ? '■' : '▷'}</button>
       <span className="latest-dur">{latest.dur}</span>
       <AudioDownload url={latest.url} className="latest-download"/>
       <button type="button" className="latest-link" onClick={() => onNavigate('library')}>Thư viện ↗</button>

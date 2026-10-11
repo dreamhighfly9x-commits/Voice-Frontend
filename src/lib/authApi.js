@@ -5,6 +5,8 @@
 import {beginVoiceTask,updateVoiceTask,endVoiceTask,resetVoiceTasks} from './dreamBotActivity';
 
 const ERROR_MESSAGES = {
+  OTP_REQUIRED: 'Nhập mã xác thực hai bước để tiếp tục.',
+  OTP_INVALID: 'Mã xác thực không đúng hoặc đã được sử dụng.',
   ACCOUNT_SUSPENDED: 'Tài khoản đã bị khóa. Liên hệ Admin.',
   INVALID_CREDENTIALS: 'Email hoặc mật khẩu không đúng.',
   TOKEN_EXPIRED: 'Phiên đăng nhập đã hết hạn.',
@@ -18,6 +20,7 @@ const ERROR_MESSAGES = {
 
 let token = null;
 let renewal = null;
+export const currentApiToken = () => token;
 export function setApiToken(value) { token = value; if(!value)resetVoiceTasks(); }
 export async function apiFetch(path, options = {}) {
   if(path==='/api/synthesize'&&options.method==='POST'){
@@ -65,7 +68,7 @@ export function errorMessage(body) {
 export async function apiJson(path, options = {}) {
   const response = await apiFetch(path, options);
   const body = await response.json().catch(() => null);
-  if (!response.ok) throw new Error(errorMessage(body));
+  if (!response.ok) { const error = new Error(errorMessage(body)); error.status = response.status; throw error; }
   return body;
 }
 
@@ -95,6 +98,10 @@ export function register(email, password) {
 
 export function login(email, password) {
   return postJson('/api/auth/login', { email, password });
+}
+
+export function googleMFA(code) {
+  return postJson('/api/auth/google/mfa', { code });
 }
 
 // Silent renew — relies on the refresh cookie the browser already holds.

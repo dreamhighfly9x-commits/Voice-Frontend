@@ -273,7 +273,7 @@ export default function BatchScreen({ animStyle, voices, maxChars, onCreated, pl
                 <GreenCheckbox className="small" aria-label={`Chọn ${r.name}`} checked={selected.has(r.id)} disabled={r.status !== 'done'} onChange={() => toggle(r.id)} />
                 <span style={{ fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</span>
                 <span style={{ color: 'var(--ink2)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.voiceName || '—'}</span>
-                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, color: 'var(--dim)' }}>{r.chars}</span>
+                <span style={{ fontFamily: 'AppArial, Arial, Helvetica, sans-serif', fontSize: 12.5, color: 'var(--dim)' }}>{r.chars}</span>
                 <span style={{ fontSize: 12, color: r.status === 'error' ? '#c0392b' : 'var(--dim2)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.error || ''}</span>
                 <span style={{ background: bg, color: fg, borderRadius: 999, padding: '4px 10px', fontSize: 11.5, fontWeight: 700, justifySelf: 'start', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
                   {r.status === 'running' && <span className="batch-spinner" aria-hidden="true" />}

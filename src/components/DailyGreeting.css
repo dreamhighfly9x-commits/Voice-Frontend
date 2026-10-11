@@ -31,8 +31,8 @@
 @media(max-width:600px){.daily-greeting>.daily-message{column-gap:12px}}
 
 /* "Tao ban doc": animated AI icon + label; icon loops on hover/focus (LottieIcon), button lifts slightly. */
-.daily-actions .daily-generate{display:inline-flex;align-items:center;gap:8px;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
-.daily-actions .daily-generate:hover,.daily-actions .daily-generate:focus-visible{transform:translateY(-1px);box-shadow:0 8px 20px #4b54bc45}
+.daily-actions .daily-generate{display:inline-flex;align-items:center;gap:8px;transition:transform .32s var(--ease-soft),box-shadow .32s var(--ease-soft),filter .32s var(--ease-soft),scale .18s var(--ease-soft)}
+.daily-actions .daily-generate:hover,.daily-actions .daily-generate:focus-visible{transform:translateY(-1px);box-shadow:0 8px 20px #2a6fb855}
 @media(prefers-reduced-motion:reduce){.daily-actions .daily-generate{transition:none}.daily-actions .daily-generate:hover,.daily-actions .daily-generate:focus-visible{transform:none}}
 /* Icon renders at 80px but takes only ~22px of vertical layout space, so the button keeps its original size; the art just overflows it. */
 .daily-actions .daily-generate .lottie-icon{margin:-29px -14px -29px -22px;pointer-events:none;position:relative;z-index:1}

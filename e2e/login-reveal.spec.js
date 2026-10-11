@@ -12,9 +12,9 @@ for(const reduced of [false,true])test(`successful login reveal, reduced motion=
   if(path==='/api/dashboard')body={series:[],ranking:[],recent:[],recordings:0,usage:{}};
   await route.fulfill({json:body});
  });
- await page.goto('/');
- await page.getByLabel('Địa chỉ email').fill('test@example.com');
- await page.getByLabel('Mật khẩu',{exact:true}).fill('testpassword');
+ await page.goto('/login');
+ await page.locator('#auth-email').fill('test@example.com');
+ await page.locator('#auth-password').fill('testpassword');
  await page.locator('button[type=submit]').click();
  await expect(page.getByRole('alert')).toBeVisible();
  await expect(page.locator('.login-reveal')).toHaveCount(0);

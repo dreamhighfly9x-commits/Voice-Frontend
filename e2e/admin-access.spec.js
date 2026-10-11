@@ -14,7 +14,7 @@ test('admin editor renders and persists role, denial, quota; responsive and dark
   else if(path.startsWith('/api/local-usage'))body={used_chars_month:12400,clones:2,storage_bytes:24000000};
   await route.fulfill({json:body});
  });
- await page.goto('/');await page.getByText('Quản trị',{exact:true}).click();
+ await page.goto('/');await page.getByRole('button',{name:'Quản trị',exact:true}).click();
  await page.getByRole('button',{name:/Người dùng thử/}).click();
  await expect(page.getByRole('heading',{name:'Người dùng & phân quyền'})).toBeVisible();
  await page.getByLabel('Tạo âm thanh').selectOption('false');

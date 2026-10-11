@@ -1,0 +1,62 @@
+.pricing-page{gap:22px}
+.pricing-head{text-align:center;max-width:640px;margin:4px auto 0}
+.pricing-head h2{margin:0 0 6px;font-size:26px;letter-spacing:-.3px}
+.pricing-head p{margin:0;font-size:14px;color:var(--ink2)}
+.pricing-head .pricing-highlights{margin-top:8px;font-size:12px;font-weight:600;color:var(--brand-navy,#1f3d73)}
+[data-theme=dark] .pricing-head .pricing-highlights{color:#bfe3ff}
+
+.pricing-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
+.pricing-card{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 20px 20px;min-width:0;transition:translate .28s var(--dh-ease,ease),box-shadow .28s var(--dh-ease,ease),border-color .28s}
+.pricing-card:hover{translate:0 -2px;box-shadow:0 10px 26px #15233d14}
+.pricing-card.is-popular{border:2px solid var(--brand-sky,#3aa0e6);box-shadow:0 0 0 4px #3aa0e61a,0 12px 30px #1f3d731f}
+.pricing-badge{position:absolute;top:-11px;left:20px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--soft);border:1px solid var(--line);color:var(--ink2);white-space:nowrap}
+.pricing-card.is-popular .pricing-badge{background:linear-gradient(115deg,var(--brand-navy,#1f3d73),var(--brand-sky,#3aa0e6));color:#fff;border-color:transparent;letter-spacing:.3px}
+.pricing-card h3{margin:2px 0 10px;font-size:15px;letter-spacing:.6px;color:var(--ink2)}
+.pricing-price{display:flex;align-items:baseline;gap:4px;flex-wrap:wrap}
+.pricing-price strong{font-size:28px;font-weight:800;letter-spacing:-.6px;color:var(--ink)}
+.pricing-price span{font-size:13px;color:var(--ink2)}
+.pricing-quota{margin-top:4px;font-size:13px;font-weight:600;color:var(--brand-navy,#1f3d73)}
+[data-theme=dark] .pricing-quota{color:#bfe3ff}
+.pricing-card ul{list-style:none;padding:16px 0 0;margin:16px 0 20px;border-top:1px solid var(--line);display:grid;gap:8px;font-size:13px;color:var(--ink);flex:1;align-content:start}
+.pricing-card li{display:flex;gap:8px;align-items:flex-start;line-height:1.45}
+.pricing-card li>span{flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;background:#3aa0e61f;color:var(--brand-sky,#3aa0e6)}
+.pricing-card li.is-missing{color:var(--dim)}
+.pricing-card li.is-missing>span{background:var(--soft);color:var(--dim)}
+.pricing-page .pricing-card button{width:100%;min-height:42px;max-width:none}
+.pricing-page button.primary{background:linear-gradient(115deg,var(--brand-navy,#1f3d73),var(--brand-sky,#3aa0e6));color:#fff;border-color:transparent}
+.pricing-page button.primary:hover:not(:disabled){filter:brightness(1.08)}
+
+.pricing-order{margin:0;border-color:#3aa0e655}
+.pricing-order h3{margin-bottom:6px}
+.pricing-breakdown{margin:12px 0;display:grid;gap:6px;max-width:360px;font-size:13px}
+.pricing-breakdown>div{display:flex;justify-content:space-between;gap:12px}
+.pricing-breakdown dt{color:var(--ink2)}.pricing-breakdown dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}
+.pricing-breakdown .is-discount dd{color:#15803d}
+.pricing-breakdown .is-total{border-top:1px dashed var(--line);padding-top:6px;font-size:15px}
+.pricing-breakdown .is-total dd{font-weight:800;color:var(--ink)}
+
+.pricing-extras{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;align-items:start}
+.pricing-extras .workspace-card{margin:0}
+.pricing-side{display:grid;gap:16px}
+.pricing-coupon h3,.pricing-offer h3{margin-bottom:4px}
+.pricing-coupon>p,.pricing-offer>p{margin:0 0 12px}
+.pricing-coupon-form{display:flex;gap:8px}
+.pricing-page .pricing-coupon-form input{flex:1;min-width:0;max-width:none;min-height:42px}
+.pricing-page .pricing-coupon-form button{flex:none;min-height:42px}
+.pricing-coupon-result{margin:12px 0 0;padding:12px 14px;border-radius:12px;font-size:13px}
+.pricing-coupon-result.is-success{background:#16a34a12;border:1px solid #16a34a40}
+.pricing-coupon-result.is-success strong{color:#15803d}
+.pricing-coupon-result.is-success p{margin:4px 0 0}
+.pricing-coupon-result.is-error{background:#dc26260f;border:1px solid #dc262633;color:#b91c1c}
+[data-theme=dark] .pricing-coupon-result.is-error{color:#fca5a5}
+[data-theme=dark] .pricing-coupon-result.is-success strong,[data-theme=dark] .pricing-breakdown .is-discount dd{color:#86efac}
+.pricing-page .pricing-target{margin:10px 0 0;max-width:360px}
+.pricing-offer{background:linear-gradient(135deg,#1f3d730d,#3aa0e61f);border-color:#3aa0e640}
+.pricing-suggested{display:flex;align-items:center;justify-content:space-between;gap:12px;border-style:dashed}
+.pricing-suggested code{font-size:16px;font-weight:800;letter-spacing:1px;color:var(--brand-navy,#1f3d73);background:#3aa0e61a;padding:4px 10px;border-radius:8px}
+[data-theme=dark] .pricing-suggested code{color:#bfe3ff}
+.pricing-suggested p{margin:6px 0 0}
+
+@media(max-width:1180px){.pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:24px}}
+@media(max-width:900px){.pricing-extras{grid-template-columns:1fr}}
+@media(max-width:640px){.pricing-grid{grid-template-columns:1fr}.pricing-head h2{font-size:22px}.pricing-coupon-form{flex-direction:column}.pricing-suggested{flex-direction:column;align-items:stretch}}

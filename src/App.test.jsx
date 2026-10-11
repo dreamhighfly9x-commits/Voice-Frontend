@@ -66,7 +66,7 @@ describe('App generate flow (Studio)', () => {
     render(<App defaultScreen="studio" />);
     await screen.findByText(/Sẵn sàng/);
     await user.click(screen.getByRole('button', { name: 'Tạo âm thanh' }));
-    expect(await screen.findByText('Bản ghi mới', { selector: '.studio-history-item strong' })).toBeInTheDocument();
+    expect(await screen.findByText('Bản ghi mới', { selector: '.studio-player strong' })).toBeInTheDocument();
     expect(await screen.findByText('Đã tạo và lưu bản ghi WAV.')).toBeInTheDocument();
   });
 

@@ -1,0 +1,65 @@
+/* Light theme after the owner's "Learnthru" dashboard reference (2026-10-11):
+   white frame (sidebar stays slate-navy), cool grey-blue workspace (#eceef3), borderless white cards on it
+   with ~12px corners and a barely-there shadow, soft solid hairlines (#e6e8ef) inside tables/lists,
+   navy ink (#2b3350) with lavender-grey secondary text, periwinkle pill buttons.
+   Brand gradients (metric cards, generate button) and the dark theme are untouched. */
+:root[data-theme='light'] {
+  --bg: #eceef3;
+  --panel: #ffffff;
+  --soft: #f4f5f8;
+  --frame: #ffffff;
+  --ink: #2b3350;
+  --ink2: #4a5270;
+  --dim: #8990a8;
+  --dim2: #9ea4b8;
+  --dim3: #b4b9c8;
+  --line: #e3e6ee;
+  --line2: #eceef3;
+  --line3: #f2f3f7;
+  --barOff: #e3e6ee;
+  --rail: #1d2a40;
+  --railInk: #ffffff;
+  --railActive: #3aa0e633;
+  --greeting: #ffffff;
+  --greetingInk: #2b3350;
+  --greetingMuted: #8990a8;
+  --card-radius: 12px;
+  --card-shadow: 0 1px 2px #2b33500a, 0 4px 14px #2b33500d;
+  --pill: #7b88c2;
+}
+
+/* Frame: white shell, the workspace sits in it as a rounded grey-blue panel. */
+[data-theme='light'] body { background: var(--frame); }
+[data-theme='light'] .app-main { background: var(--bg); border-radius: 20px; }
+
+/* Sidebar: deep slate-navy (kept from the previous style at the owner's request). */
+[data-theme='light'] .nav-rail, [data-theme='light'] .nav-rail.expanded { background: linear-gradient(180deg, #1d2a40 0%, #24344f 100%); color: #ffffff; border: 0; box-shadow: 0 10px 28px #1d2a4026; }
+[data-theme='light'] .nav-section button { color: #aab6c9; }
+[data-theme='light'] .nav-section button:hover { background: #ffffff14; color: #ffffff; }
+[data-theme='light'] .nav-section button[aria-current=page] { background: linear-gradient(115deg, #3aa0e633, #3aa0e61a); color: #ffffff; box-shadow: inset 0 0 0 1px #3aa0e64d; }
+[data-theme='light'] .nav-rail .rail-toggle, [data-theme='light'] .nav-rail.expanded .nav-section small, [data-theme='light'] .nav-rail.expanded .brand-mark .dh-logo-tagline { color: #8796ad; }
+[data-theme='light'] .nav-rail .brand-mark .dh-logo, [data-theme='light'] .nav-rail.expanded .brand-mark .dh-logo-name b { color: #ffffff; }
+[data-theme='light'] .rail-bottom button { color: #aab6c9; }
+[data-theme='light'] .nav-rail .user-initial { background: #ffffff; color: #1d2a40; }
+
+/* Cards: white, borderless, 12px corners, soft shadow (dashboard, studio, library, workspace). */
+[data-theme='light'] :is(.daily-greeting, .portfolio-card, .interaction-card, .voice-ranking, .recent-card, .favorite-leaderboard,
+  .recording-launcher, .latest-recording, .voice-studio, .workspace-card, .admin-card, .pricing-card, .dreambot-companion, .vb-dialog) {
+  background: #ffffff; border: 0; border-radius: var(--card-radius); box-shadow: var(--card-shadow);
+}
+[data-theme='light'] .portfolio-card.pastel-blue { background: #ffffff; color: var(--ink); }
+[data-theme='light'] :is(.metric-card, .create-promo, .welcome-credit, .dashboard .overview-credit .welcome-credit) { border-radius: var(--card-radius); box-shadow: var(--card-shadow); }
+[data-theme='light'] .create-promo { box-shadow: var(--card-shadow); }
+
+/* Inner rows / list items: soft solid hairlines instead of boxes. */
+[data-theme='light'] :is(.studio-history-item, .recent-item) { border-radius: 10px; border-color: var(--line); }
+[data-theme='light'] :is(table, .vb-table) :is(th, td) { border-color: var(--line2); }
+
+/* Controls: search + inputs on a soft tile, pills for buttons. */
+[data-theme='light'] :is(.profile-pill, .icon-button, .period-control) { background: #ffffff; border: 0; box-shadow: var(--card-shadow); }
+[data-theme='light'] .new-reading { background: var(--pill); color: #fff; border-radius: 999px; box-shadow: 0 4px 12px #7b88c240; }
+[data-theme='light'] .period-control button[aria-pressed=true] { background: var(--pill); color: #fff; }
+[data-theme='light'] .user-initial, [data-theme='light'] .profile-pill b { background: #eef0f6; color: var(--ink); }
+[data-theme='light'] .subtle-pill { background: #f4f5f8; color: var(--dim); }
+[data-theme='light'] .bar-track, [data-theme='light'] .mini-track { background: #eceef3; }
+[data-theme='light'] ::selection { background: #7b88c240; }

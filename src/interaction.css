@@ -1,0 +1,28 @@
+/* Soft press feel for every clickable control. :where() keeps specificity at 0,
+   so any component's own transition/hover rules still win; `scale` (not
+   `transform`) composes with transforms components already use. */
+:root{
+  --ease-soft:cubic-bezier(.22,.61,.36,1);
+  /* Brand gradient taken from the logo (navy -> sky). */
+  --brand-navy:#1f3d73;
+  --brand-sky:#3aa0e6;
+}
+:where(button,[role="button"],a,summary,select,label){
+  -webkit-tap-highlight-color:transparent;
+}
+:where(button,[role="button"],summary){
+  transition-property:background-color,background,color,border-color,box-shadow,opacity,filter,scale,translate;
+  transition-duration:.24s;
+  transition-timing-function:var(--ease-soft);
+}
+:where(button,[role="button"],summary):active:not(:disabled):not([aria-disabled="true"]){
+  scale:.97;
+  transition-duration:.12s;
+}
+:where(a,select,input,textarea){
+  transition:color .2s var(--ease-soft),background-color .2s var(--ease-soft),border-color .2s var(--ease-soft),box-shadow .2s var(--ease-soft);
+}
+@media (prefers-reduced-motion:reduce){
+  :where(button,[role="button"],summary,a,select,input,textarea){transition-duration:.01ms!important}
+  :where(button,[role="button"],summary):active{scale:none}
+}
